@@ -15,5 +15,8 @@ namespace Roomies.API.Domain.Models
         public string LeaseholderId { set; get; }
         public Landlord Landlord { set; get; }
         public string LandlordId { set; get; }
+        public Post Post { set; get; }
+        public string PostId { set; get; }
+
     }
 }

@@ -21,7 +21,9 @@ namespace Roomies.API.Domain.Models
 		public string District { get; set; }
 		public string Address { get; set; }
 		public List<UserPaymentMethod> UserPaymentMethods { get; set; }
-		public List<UserConversation> UserConversations { get; set; }
+		public List<Conversation> Conversations { get; set; }
+
+		//public List<UserConversation> UserConversations { get; set; }
 		public string PlanId { set; get; } 
 		public Plan Plan { set; get; }
 	}

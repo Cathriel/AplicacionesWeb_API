@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace Supermarket.API.Extensions
+namespace Roomies.API.Extensions
 {
     public static class ModelBuilderExtensions
     {

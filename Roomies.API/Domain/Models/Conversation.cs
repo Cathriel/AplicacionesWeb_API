@@ -9,7 +9,10 @@ namespace Roomies.API.Domain.Models
     {
         public string Id { set; get; }
         public User Sender { set; get; }
+        public string SenderId { set; get; }
         public User Receiver { set; get; }
+        public string ReceiverId { set; get; }
         public DateTime DateCreation { set; get; }
+        public List<Message> Messages { set; get; }
     }
 }

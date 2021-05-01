@@ -19,5 +19,7 @@ namespace Roomies.API.Domain.Models
         public DateTime PostDate { set; get; }
         public List<Review> Reviews { set; get; }
         public List<FavouritePost> FavouritePosts { set; get; }
+        public Landlord Landlord { set; get; }
+        public string LandlordId { set; get; }
     }
 }
