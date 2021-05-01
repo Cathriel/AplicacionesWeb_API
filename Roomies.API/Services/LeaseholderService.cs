@@ -1,6 +1,7 @@
 ﻿using Roomies.API.Domain.Models;
 using Roomies.API.Domain.Repositories;
 using Roomies.API.Domain.Services;
+using Roomies.API.Domain.Services.Communications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,35 @@ namespace Roomies.API.Services
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<LeaseholderResponse> DeleteAsync(string id)
+        {
+            var existingLeaseholder = await _leaseholderRepository.FindById(id);
+
+            if (existingLeaseholder == null)
+                return new LeaseholderResponse("Arrendatario inexistente");
+
+            try
+            {
+                _leaseholderRepository.Remove(existingLeaseholder);
+                await _unitOfWork.CompleteAsync();
+
+                return new LeaseholderResponse(existingLeaseholder);
+            }
+            catch (Exception ex)
+            {
+                return new LeaseholderResponse($"Un error ocurrió al eliminar el Arrendatario: {ex.Message}");
+            }
+        }
+
+        public async Task<LeaseholderResponse> GetByIdAsync(string id)
+        {
+            var existingLeaseholder = await _leaseholderRepository.FindById(id);
+
+            if (existingLeaseholder == null)
+                return new LeaseholderResponse("Arrendatario inexistente");
+
+            return new LeaseholderResponse(existingLeaseholder);
+        }
 
         public async Task<IEnumerable<Leaseholder>> ListAsync()
         {
@@ -32,6 +62,43 @@ namespace Roomies.API.Services
             var favouritePost = await _favouritePostRepository.ListByPostIdAsync(postId);
             var leaseholders= favouritePost.Select(pt => pt.Leaseholder).ToList();
             return leaseholders;
+        }
+
+        public async Task<LeaseholderResponse> SaveAsync(Leaseholder leaseholder)
+        {
+            try
+            {
+                await _leaseholderRepository.AddAsync(leaseholder);
+                await _unitOfWork.CompleteAsync();
+
+                return new LeaseholderResponse(leaseholder);
+            }
+            catch (Exception ex)
+            {
+                return new LeaseholderResponse($"Un error ocurrió al guardar el arrendatario: {ex.Message}");
+            }
+        }
+
+        public async Task<LeaseholderResponse> UpdateAsync(string id, Leaseholder leaseholder)
+        {
+            var existingLandlord = await _leaseholderRepository.FindById(id);
+
+            if (existingLandlord == null)
+                return new LeaseholderResponse("Arrendatario inexistente");
+
+            existingLandlord.Name = leaseholder.Name;
+
+            try
+            {
+                _leaseholderRepository.Update(existingLandlord);
+                await _unitOfWork.CompleteAsync();
+
+                return new LeaseholderResponse(existingLandlord);
+            }
+            catch (Exception ex)
+            {
+                return new LeaseholderResponse($"Un error ocurrió al actualizar el arrendador: {ex.Message}");
+            }
         }
     }
 }

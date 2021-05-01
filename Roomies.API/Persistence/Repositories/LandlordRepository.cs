@@ -15,9 +15,29 @@ namespace Roomies.API.Persistence.Repositories
         {
         }
 
-        public async Task<IEnumerable<Landlord>> ListAsync()
+        public async Task AddAsync(Leaseholder landlord)
+        {
+            await _context.Landlords.AddAsync(landlord);
+        }
+
+        public async Task<Leaseholder> FindById(string id)
+        {
+            return await _context.Landlords.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Leaseholder>> ListAsync()
         {
             return await _context.Landlords.ToListAsync();
+        }
+
+        public void Remove(Leaseholder landlord)
+        {
+            _context.Landlords.Remove(landlord);
+        }
+
+        public void Update(Leaseholder landlord)
+        {
+            _context.Landlords.Update(landlord);
         }
     }
 }

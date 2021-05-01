@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Roomies.API.Domain.Services.Communications
 {
-    public class UserConversationResponse : BaseResponse<UserConversation>
+    /*public class UserConversationResponse : BaseResponse<UserConversation>
     {
         public UserConversationResponse(UserConversation resource) : base(resource)
         {
@@ -16,5 +16,5 @@ namespace Roomies.API.Domain.Services.Communications
         public UserConversationResponse(string message) : base(message)
         {
         }
-    }
+    }*/
 }

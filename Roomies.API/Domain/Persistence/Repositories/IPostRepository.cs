@@ -10,7 +10,6 @@ namespace Roomies.API.Domain.Repositories
     {
         Task<IEnumerable<Post>> ListAsync();
         Task<IEnumerable<Post>> ListByLandlordIdAsync(string landlordId);
-        Task<IEnumerable<Post>> ListByLeaseholderIdAsync(string leasholderId);
         Task AddAsync(Post post);
         Task<Post> FindById(string postId);
         void Update(Post post);

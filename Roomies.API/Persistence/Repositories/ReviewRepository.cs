@@ -20,7 +20,7 @@ namespace Roomies.API.Persistence.Repositories
             await _context.Reviews.AddAsync(review);
         }
 
-        public async Task<Review> FindByIdAsync(string id)
+        public async Task<Review> FindById(string id)
         {
             return await _context.Reviews.FindAsync(id);
         }
@@ -28,6 +28,23 @@ namespace Roomies.API.Persistence.Repositories
         public async Task<IEnumerable<Review>> ListAsync()
         {
             return await _context.Reviews.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Review>> ListByLandlordId(string landlordId)
+        {
+
+            return await _context.Reviews
+               .Where(p => p.LandlordId == landlordId)
+               .Include(p => p.Landlord)
+               .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Review>> ListByLeaseholderId(string leaseholderId)
+        {
+            return await _context.Reviews
+               .Where(p => p.LeaseholderId == leaseholderId)
+               .Include(p => p.Leaseholder)
+               .ToListAsync();
         }
 
         public async Task<IEnumerable<Review>> ListByPostId(string postId)

@@ -7,6 +7,6 @@ namespace Roomies.API.Domain.Models
 {
     public class Landlord : User
     {
-        public List<Post> Posts { set; get; }
+        public List<Post> Posts { get; set; }
     }
 }
