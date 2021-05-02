@@ -9,7 +9,7 @@ namespace Roomies.API.Domain.Persistence.Contexts
     {
         public DbSet<Conversation> Conversations { get; set; }
         public DbSet<FavouritePost> FavouritePosts { get; set; }
-        public DbSet<Leaseholder> Landlords { get; set; }
+        public DbSet<Landlord> Landlords { get; set; }
         public DbSet<Leaseholder> Leaseholders { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
@@ -60,31 +60,31 @@ namespace Roomies.API.Domain.Persistence.Contexts
                 .HasForeignKey(pt => pt.LeaseholderId);
 
             //Landlord Entity
-            builder.Entity<Leaseholder>().ToTable("Landlords");
-
-            builder.Entity<Leaseholder>().HasKey(p => p.IdUser);
-            builder.Entity<Leaseholder>().Property(p => p.IdUser).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Leaseholder>().Property(p => p.Email).IsRequired().HasMaxLength(50);
-            builder.Entity<Leaseholder>().Property(p => p.Password).IsRequired().HasMaxLength(24);
-            builder.Entity<Leaseholder>().Property(p => p.Name).IsRequired().HasMaxLength(50);
-            builder.Entity<Leaseholder>().Property(p => p.LastName).IsRequired().HasMaxLength(50);
-            builder.Entity<Leaseholder>().Property(p => p.CellPhone).IsRequired().HasMaxLength(9);
-            builder.Entity<Leaseholder>().Property(p => p.IdCard).IsRequired().HasMaxLength(8);
-            builder.Entity<Leaseholder>().Property(p => p.Description).IsRequired().HasMaxLength(240);
-            builder.Entity<Leaseholder>().Property(p => p.Birthday).IsRequired();
-            builder.Entity<Leaseholder>().Property(p => p.Department).IsRequired().HasMaxLength(25);
-            builder.Entity<Leaseholder>().Property(p => p.Province).IsRequired().HasMaxLength(25);
-            builder.Entity<Leaseholder>().Property(p => p.District).IsRequired().HasMaxLength(25);
-            builder.Entity<Leaseholder>().Property(p => p.Address).IsRequired().HasMaxLength(100);
+            builder.Entity<Landlord>().ToTable("Landlords");
+                         
+            builder.Entity<Landlord>().HasKey(p => p.IdUser);
+            builder.Entity<Landlord>().Property(p => p.IdUser).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Landlord>().Property(p => p.Email).IsRequired().HasMaxLength(50);
+            builder.Entity<Landlord>().Property(p => p.Password).IsRequired().HasMaxLength(24);
+            builder.Entity<Landlord>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+            builder.Entity<Landlord>().Property(p => p.LastName).IsRequired().HasMaxLength(50);
+            builder.Entity<Landlord>().Property(p => p.CellPhone).IsRequired().HasMaxLength(9);
+            builder.Entity<Landlord>().Property(p => p.IdCard).IsRequired().HasMaxLength(8);
+            builder.Entity<Landlord>().Property(p => p.Description).IsRequired().HasMaxLength(240);
+            builder.Entity<Landlord>().Property(p => p.Birthday).IsRequired();
+            builder.Entity<Landlord>().Property(p => p.Department).IsRequired().HasMaxLength(25);
+            builder.Entity<Landlord>().Property(p => p.Province).IsRequired().HasMaxLength(25);
+            builder.Entity<Landlord>().Property(p => p.District).IsRequired().HasMaxLength(25);
+            builder.Entity<Landlord>().Property(p => p.Address).IsRequired().HasMaxLength(100);
             // Relationships 
-            builder.Entity<Leaseholder>()
+            builder.Entity<Landlord>()
                 .HasMany(p => p.Reviews)
-                .WithOne(p => p.Leaseholder)
-                .HasForeignKey(p => p.LeaseholderId);
+                .WithOne(p => p.Landlord)
+                .HasForeignKey(p => p.LandlordId);
 
-            builder.Entity<Leaseholder>()
+            builder.Entity<Landlord>()
                 .HasMany(p => p.Conversations)
-                .WithOne(p => (Leaseholder)p.Receiver) ///
+                .WithOne(p => (Landlord)p.Receiver) ///
                 .HasForeignKey(p => p.ReceiverId);
 
 

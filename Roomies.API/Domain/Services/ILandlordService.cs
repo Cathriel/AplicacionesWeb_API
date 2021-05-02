@@ -9,10 +9,10 @@ namespace Roomies.API.Domain.Services
 {
     public interface ILandlordService
     {
-        Task<IEnumerable<Leaseholder>> ListAsync();
+        Task<IEnumerable<Landlord>> ListAsync();
         Task<LandlordResponse> GetByIdAsync(string id);
-        Task<LandlordResponse> SaveAsync(Leaseholder landlord);
-        Task<LandlordResponse> UpdateAsync(string id, Leaseholder landlord);
+        Task<LandlordResponse> SaveAsync(Landlord landlord);
+        Task<LandlordResponse> UpdateAsync(string id, Landlord landlord);
         Task<LandlordResponse> DeleteAsync(string id);
 
     }

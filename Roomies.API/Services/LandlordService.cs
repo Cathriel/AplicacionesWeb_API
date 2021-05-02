@@ -50,12 +50,12 @@ namespace Roomies.API.Services
             return new LandlordResponse(existingLandlord);
         }
 
-        public async Task<IEnumerable<Leaseholder>> ListAsync()
+        public async Task<IEnumerable<Landlord>> ListAsync()
         {
             return await _landlordRepository.ListAsync();
         }
 
-        public async Task<LandlordResponse> SaveAsync(Leaseholder landlord)
+        public async Task<LandlordResponse> SaveAsync(Landlord landlord)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<LandlordResponse> UpdateAsync(string id, Leaseholder landlord)
+        public async Task<LandlordResponse> UpdateAsync(string id, Landlord landlord)
         {
             var existingLandlord = await _landlordRepository.FindById(id);
 

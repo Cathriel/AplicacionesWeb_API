@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Roomies.API.Domain.Services.Communications
 {
-    public class LandlordResponse : BaseResponse<Leaseholder>
+    public class LandlordResponse : BaseResponse<Landlord>
     {
-        public LandlordResponse(Leaseholder resource) : base(resource)
+        public LandlordResponse(Landlord resource) : base(resource)
         {
         }
 

@@ -8,10 +8,10 @@ namespace Roomies.API.Domain.Repositories
 {
     public interface ILandlordRepository
     {
-        Task<IEnumerable<Leaseholder>> ListAsync();
-        Task<Leaseholder> FindById(string id);
-        Task AddAsync(Leaseholder landlord);
-        void Update(Leaseholder landlord);
-        void Remove(Leaseholder landlord);
+        Task<IEnumerable<Landlord>> ListAsync();
+        Task<Landlord> FindById(string id);
+        Task AddAsync(Landlord landlord);
+        void Update(Landlord landlord);
+        void Remove(Landlord landlord);
     }
 }

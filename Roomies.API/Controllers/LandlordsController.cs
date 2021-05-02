@@ -36,7 +36,7 @@ namespace Roomies.API.Controllers
         public async Task<IEnumerable<LandlordResource>> GetAllAsync()
         {
             var landlords = await _landlordService.ListAsync();//ListByCategoryIdAsync(categoryId);
-            var resources = _mapper.Map<IEnumerable<Leaseholder>, IEnumerable<LandlordResource>>(landlords);
+            var resources = _mapper.Map<IEnumerable<Landlord>, IEnumerable<LandlordResource>>(landlords);
 
             return resources;
         }
@@ -50,7 +50,7 @@ namespace Roomies.API.Controllers
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var landlordResource = _mapper.Map<Leaseholder, LandlordResource>(result.Resource);
+            var landlordResource = _mapper.Map<Landlord, LandlordResource>(result.Resource);
             return Ok(landlordResource);
         }
         //---------------------------
@@ -61,13 +61,13 @@ namespace Roomies.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var landlord = _mapper.Map<SaveLandlordResource, Leaseholder>(resource);
+            var landlord = _mapper.Map<SaveLandlordResource, Landlord>(resource);
             var result = await _landlordService.SaveAsync(landlord);
 
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var landlordResource = _mapper.Map<Leaseholder, LandlordResource>(result.Resource);
+            var landlordResource = _mapper.Map<Landlord, LandlordResource>(result.Resource);
 
             return Ok(landlordResource);
         }
@@ -78,13 +78,13 @@ namespace Roomies.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var landlord = _mapper.Map<SaveLandlordResource, Leaseholder>(resource);
+            var landlord = _mapper.Map<SaveLandlordResource, Landlord>(resource);
             var result = await _landlordService.UpdateAsync(id, landlord);
 
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var landlordResource = _mapper.Map<Leaseholder, LandlordResource>(result.Resource);
+            var landlordResource = _mapper.Map<Landlord, LandlordResource>(result.Resource);
 
             return Ok(landlordResource);
 
@@ -98,7 +98,7 @@ namespace Roomies.API.Controllers
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var landlordResource = _mapper.Map<Leaseholder, LandlordResource>(result.Resource);
+            var landlordResource = _mapper.Map<Landlord, LandlordResource>(result.Resource);
 
             return Ok(landlordResource);
 

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1F3kSt6LejpMexMu7U0kAkVrfi1t5/pLB3jBMsRCMPF6o9OICGlfc2Mj/JnnplihWKZePMpYKAaR3kXMb4mB1Q==",
+  "dgSpecHash": "wTwIivC5h8RiWF+ikgiXuXFe3cAdgB5SS2Uyliak44iAqkeiw/zo+pPxEnoOOZvWChPXdiP9pvCob7H8inHPmw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lhm20\\Desktop\\Roomies.API\\Roomies.API.csproj",
+  "projectFilePath": "C:\\Users\\lhm20\\Desktop\\Roomies.APIULTIMO\\Roomies.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lhm20\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\lhm20\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",

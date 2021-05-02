@@ -37,6 +37,7 @@ namespace Roomies.API.Services
             }
         }
 
+
         public async Task<IEnumerable<UserPaymentMethod>> ListAsync()
         {
             return await _userPaymentMethodRepository.ListAsync();
