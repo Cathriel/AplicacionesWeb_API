@@ -11,5 +11,7 @@ namespace Roomies.API.Resources
         public string Content { set; get; }
         public DateTime Date { set; get; }
         public int StarQuantity { set; get; }
+        public PostResource Post { set; get; }
+        public LeaseholderResource Leaseholder { set; get; }
     }
 }

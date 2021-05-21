@@ -11,7 +11,6 @@ namespace Roomies.API.Domain.Repositories
         Task<IEnumerable<Review>> ListAsync();
         Task<IEnumerable<Review>> ListByPostId(string postId);
         Task<IEnumerable<Review>> ListByLeaseholderId(string leaseholderId);
-        Task<IEnumerable<Review>> ListByLandlordId(string landlordId);
         Task<Review> FindById(string id);
 
         Task AddAsync(Review review);

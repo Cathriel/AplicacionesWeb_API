@@ -30,7 +30,6 @@ namespace Roomies.API.Resources
 		[MaxLength(240)]
 		public string Description { get; set; }
 		[Required]
-		//[MaxLength(50)]
 		public DateTime Birthday { get; set; }
 		[Required]
 		[MaxLength(25)]
@@ -44,6 +43,5 @@ namespace Roomies.API.Resources
 		[Required]
 		[MaxLength(100)]
 		public string Address { get; set; }
-		public PlanResource Plan { set; get; }
 	}
 }

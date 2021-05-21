@@ -15,7 +15,6 @@ namespace Roomies.API.Resources
         [MaxLength(3)]
         public string CVV { get; set; }
         [Required]
-        //[MaxLength(16)]
         public DateTime ExpiryDate { get; set; }
     }
 }

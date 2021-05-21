@@ -10,7 +10,6 @@ namespace Roomies.API.Domain.Services
     public interface IReviewService
     {
         Task<IEnumerable<Review>> ListAsync();
-        Task<IEnumerable<Review>> ListByLandlordIdAsync(string landlordId);
         Task<IEnumerable<Review>> ListByLeaseholderIdAsync(string leaseholderId);
         Task<ReviewResponse> GetByIdAsync(string reviewId);
         Task<ReviewResponse> SaveAsync(Review review);

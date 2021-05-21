@@ -77,7 +77,15 @@ namespace Roomies.API.Services
             if (existingLandlord == null)
                 return new LandlordResponse("Arrendador inexistente");
 
-            existingLandlord.Name = landlord.Name;
+            //existingLandlord.Name = landlord.Name;
+            //existingLandlord.Address = landlord.Address;
+            //existingLandlord.Birthday = landlord.Birthday;
+            //existingLandlord.Email = landlord.Email;
+            //existingLandlord.Department = landlord.Department;
+            //existingLandlord.CellPhone = landlord.CellPhone;
+            //existingLandlord.District = landlord.District;
+            //existingLandlord.LastName = landlord.LastName;
+            existingLandlord = landlord;
 
             try
             {

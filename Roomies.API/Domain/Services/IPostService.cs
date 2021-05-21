@@ -11,7 +11,6 @@ namespace Roomies.API.Domain.Services
     {
         Task<IEnumerable<Post>> ListAsync();
         Task<IEnumerable<Post>> ListByLandlordIdAsync(string landlordId);
-        Task<IEnumerable<Post>> ListByLeaseholderIdAsync(string leasholderId);
         Task<PostResponse> GetByIdAsync(string postId);
         Task<PostResponse> SaveAsync(Post post);
         Task<PostResponse> UpdateAsync(string id, Post post);

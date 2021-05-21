@@ -11,6 +11,9 @@ namespace Roomies.API.Domain.Models
         public string Content { set; get; } 
         public DateTime SentDate { set; get; }
         public bool Seen { set; get; }
+
+        public User User { get; set; }
+        public string UserId { get; set; }
         public string ConversationId { set; get; }
         public Conversation Conversation { set; get; }
     }

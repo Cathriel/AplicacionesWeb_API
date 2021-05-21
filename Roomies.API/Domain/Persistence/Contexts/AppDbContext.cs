@@ -17,7 +17,6 @@ namespace Roomies.API.Domain.Persistence.Contexts
         public DbSet<Post> Posts { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<User> Users { get; set; }
-        //public DbSet<UserConversation> UserConversations { get; set; }
         public DbSet<UserPaymentMethod> UserPaymentMethods { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
@@ -59,62 +58,61 @@ namespace Roomies.API.Domain.Persistence.Contexts
                 .WithMany(t => t.FavouritePosts)
                 .HasForeignKey(pt => pt.LeaseholderId);
 
+
+            //User Entity
+            builder.Entity<User>().ToTable("Users");
+                           
+            builder.Entity<User>().HasKey(p => p.IdUser);
+            builder.Entity<User>().Property(p => p.IdUser).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<User>().Property(p => p.Email).IsRequired().HasMaxLength(50);
+            builder.Entity<User>().Property(p => p.Password).IsRequired().HasMaxLength(24);
+            builder.Entity<User>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+            builder.Entity<User>().Property(p => p.LastName).IsRequired().HasMaxLength(50);
+            builder.Entity<User>().Property(p => p.CellPhone).IsRequired().HasMaxLength(9);
+            builder.Entity<User>().Property(p => p.IdCard).IsRequired().HasMaxLength(8);
+            builder.Entity<User>().Property(p => p.Description).IsRequired().HasMaxLength(240);
+            builder.Entity<User>().Property(p => p.Birthday).IsRequired();
+            builder.Entity<User>().Property(p => p.Department).IsRequired().HasMaxLength(25);
+            builder.Entity<User>().Property(p => p.Province).IsRequired().HasMaxLength(25);
+            builder.Entity<User>().Property(p => p.District).IsRequired().HasMaxLength(25);
+            builder.Entity<User>().Property(p => p.Address).IsRequired().HasMaxLength(100);
+            builder.Entity<User>().Property(p => p.StartSubscription).IsRequired();
+            builder.Entity<User>().Property(p => p.EndSubsciption).IsRequired();
+
+            // Relationships 
+            builder.Entity<User>()
+                .HasMany(p => p.Conversations)
+                .WithOne(p => p.User1)
+                .HasForeignKey(p => p.User1Id);
+
+            //builder.Entity<User>()
+            //   .HasMany(p => p.Conversations)
+            //   .WithOne(p => p.User2)
+            //   .HasForeignKey(p => p.User2Id);
+
+
             //Landlord Entity
             builder.Entity<Landlord>().ToTable("Landlords");
                          
-            builder.Entity<Landlord>().HasKey(p => p.IdUser);
-            builder.Entity<Landlord>().Property(p => p.IdUser).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Landlord>().Property(p => p.Email).IsRequired().HasMaxLength(50);
-            builder.Entity<Landlord>().Property(p => p.Password).IsRequired().HasMaxLength(24);
-            builder.Entity<Landlord>().Property(p => p.Name).IsRequired().HasMaxLength(50);
-            builder.Entity<Landlord>().Property(p => p.LastName).IsRequired().HasMaxLength(50);
-            builder.Entity<Landlord>().Property(p => p.CellPhone).IsRequired().HasMaxLength(9);
-            builder.Entity<Landlord>().Property(p => p.IdCard).IsRequired().HasMaxLength(8);
-            builder.Entity<Landlord>().Property(p => p.Description).IsRequired().HasMaxLength(240);
-            builder.Entity<Landlord>().Property(p => p.Birthday).IsRequired();
-            builder.Entity<Landlord>().Property(p => p.Department).IsRequired().HasMaxLength(25);
-            builder.Entity<Landlord>().Property(p => p.Province).IsRequired().HasMaxLength(25);
-            builder.Entity<Landlord>().Property(p => p.District).IsRequired().HasMaxLength(25);
-            builder.Entity<Landlord>().Property(p => p.Address).IsRequired().HasMaxLength(100);
+           
             // Relationships 
-            builder.Entity<Landlord>()
-                .HasMany(p => p.Reviews)
-                .WithOne(p => p.Landlord)
-                .HasForeignKey(p => p.LandlordId);
+           
 
             builder.Entity<Landlord>()
-                .HasMany(p => p.Conversations)
-                .WithOne(p => (Landlord)p.Receiver) ///
-                .HasForeignKey(p => p.ReceiverId);
+                .HasMany(p => p.Posts)
+                .WithOne(p => p.Landlord) ///
+                .HasForeignKey(p => p.LandlordId);
 
 
             //leaseholder Entity
             builder.Entity<Leaseholder>().ToTable("Leaseholders");
 
-            builder.Entity<Leaseholder>().HasKey(p => p.IdUser);
-            builder.Entity<Leaseholder>().Property(p => p.IdUser).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Leaseholder>().Property(p => p.Email).IsRequired().HasMaxLength(50);
-            builder.Entity<Leaseholder>().Property(p => p.Password).IsRequired().HasMaxLength(24);
-            builder.Entity<Leaseholder>().Property(p => p.Name).IsRequired().HasMaxLength(50);
-            builder.Entity<Leaseholder>().Property(p => p.LastName).IsRequired().HasMaxLength(50);
-            builder.Entity<Leaseholder>().Property(p => p.CellPhone).IsRequired().HasMaxLength(9);
-            builder.Entity<Leaseholder>().Property(p => p.IdCard).IsRequired().HasMaxLength(8);
-            builder.Entity<Leaseholder>().Property(p => p.Description).IsRequired().HasMaxLength(240);
-            builder.Entity<Leaseholder>().Property(p => p.Birthday).IsRequired();
-            builder.Entity<Leaseholder>().Property(p => p.Department).IsRequired().HasMaxLength(25);
-            builder.Entity<Leaseholder>().Property(p => p.Province).IsRequired().HasMaxLength(25);
-            builder.Entity<Leaseholder>().Property(p => p.District).IsRequired().HasMaxLength(25);
-            builder.Entity<Leaseholder>().Property(p => p.Address).IsRequired().HasMaxLength(100);
-
+           
             builder.Entity<Leaseholder>()
                 .HasMany(p => p.Reviews)
                 .WithOne(p => p.Leaseholder)
                 .HasForeignKey(p => p.LeaseholderId);
 
-            builder.Entity<Leaseholder>()
-                .HasMany(p => p.Conversations)
-                .WithOne(p => (Leaseholder)p.Sender) ///
-                .HasForeignKey(p => p.SenderId);
 
             //Message Entity
             builder.Entity<Message>().ToTable("Messages");
@@ -141,9 +139,9 @@ namespace Roomies.API.Domain.Persistence.Contexts
 
             builder.Entity<Plan>().HasKey(p => p.Id);
             builder.Entity<Plan>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            //builder.Entity<Plan>().Property(p => p.Price).IsRequired();
-            //builder.Entity<Plan>().Property(p => p.Name).IsRequired().HasMaxLength(50).
-            //builder.Entity<Plan>().Property(p => p.Description).IsRequired().HasMaxLength();
+            builder.Entity<Plan>().Property(p => p.Price).IsRequired();
+            builder.Entity<Plan>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+            builder.Entity<Plan>().Property(p => p.Description).IsRequired().HasMaxLength(200);
 
             builder.Entity<Plan>()
                 .HasMany(p => p.Users)
@@ -164,6 +162,11 @@ namespace Roomies.API.Domain.Persistence.Contexts
             builder.Entity<Post>().Property(p => p.Price).IsRequired();
             builder.Entity<Post>().Property(p => p.RoomQuantity).IsRequired();
             builder.Entity<Post>().Property(p => p.PostDate).IsRequired();
+
+            builder.Entity<Post>()
+               .HasMany(p => p.Reviews)
+               .WithOne(p => p.Post)
+               .HasForeignKey(p => p.PostId);
             //-------------------------------------
 
             // Review Entity

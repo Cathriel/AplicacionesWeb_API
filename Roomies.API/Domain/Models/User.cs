@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Roomies.API.Domain.Models
 {
-    public abstract class User
+    public class User
     {
 		public string IdUser { get; set; }
 		public string Email { get; set; }
@@ -23,8 +23,10 @@ namespace Roomies.API.Domain.Models
 		public List<UserPaymentMethod> UserPaymentMethods { get; set; }
 		public List<Conversation> Conversations { get; set; }
 
-		//public List<UserConversation> UserConversations { get; set; }
 		public string PlanId { set; get; } 
 		public Plan Plan { set; get; }
+
+		public DateTime StartSubscription { set; get; }
+		public DateTime EndSubsciption { set; get; }
 	}
 }

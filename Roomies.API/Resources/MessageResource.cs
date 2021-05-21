@@ -12,5 +12,6 @@ namespace Roomies.API.Resources
         public DateTime SentDate { set; get; }
         public bool Seen { set; get; }
         public ConversationResource Conversation { set; get; }
+        public UserResource User { set; get; }
     }
 }

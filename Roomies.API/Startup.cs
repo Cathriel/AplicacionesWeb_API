@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Roomies.API.Domain.Persistence.Contexts;
+using Roomies.API.Domain.Persistence.Repositories;
 using Roomies.API.Domain.Repositories;
 using Roomies.API.Domain.Services;
 using Roomies.API.Persistence.Repositories;
@@ -52,6 +53,7 @@ namespace Roomies.API
             services.AddScoped <IPostRepository,PostRepository>();
             services.AddScoped <IReviewRepository,ReviewRepository>();
             services.AddScoped <IUserPaymentMethodRepository,UserPaymentMethodRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IConversationService, ConversationService>();
@@ -59,12 +61,12 @@ namespace Roomies.API
             services.AddScoped<ILandlordService, LandlordService>();
             services.AddScoped<ILeaseholderService, LeaseholderService>();
             services.AddScoped<IMessageService, MessageService>();
-            services.AddScoped <IPaymentMethodService,PaymentMethodService > ();
-            services.AddScoped <IPlanService,PlanService > ();
-            services.AddScoped <IPostService,PostService > ();
+            services.AddScoped <IPaymentMethodService,PaymentMethodService >();
+            services.AddScoped <IPlanService,PlanService >();
+            services.AddScoped <IPostService,PostService >();
             services.AddScoped <IReviewService,ReviewService > ();
-            services.AddScoped <IUserPaymentMethodService,UserPaymentMethodService > ();
-            //services.AddScoped <Iuser, > ();
+            services.AddScoped <IUserPaymentMethodService,UserPaymentMethodService >();
+            services.AddScoped<IUserService, UserService>();
 
             // Endpoints Case Conventions Configuration
 

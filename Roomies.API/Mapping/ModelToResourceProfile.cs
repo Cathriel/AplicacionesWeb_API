@@ -13,22 +13,16 @@ namespace Roomies.API.Mapping
         public ModelToResourceProfile()
         {
             CreateMap<Conversation, ConversationResource>();
-
             CreateMap<Message, MessageResource>();
-
             CreateMap<PaymentMethod, PaymentMethodResource>();
             CreateMap<Plan, PlanResource>();
             CreateMap<Review, ReviewResource>();
             CreateMap<Post, PostResource>();
             CreateMap<User, UserResource>();
+            CreateMap<Landlord, LandlordResource>();
+            CreateMap<Leaseholder, LeaseholderResource>();
 
-            /* CreateMap<Category, CategoryResource>();
-
-             CreateMap<Product, ProductResource>()
-                 .ForMember(src => src.UnitOfMeasurement,
-                 opt => opt.MapFrom(src => src.UnitOfMeasurement.ToDescriptionString()));
-
-             CreateMap<Tag, TagResource>();*/
+       
 
         }
     }

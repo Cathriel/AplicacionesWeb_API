@@ -20,6 +20,8 @@ namespace Roomies.API.Resources
 		public string Department { get; set; }
 		public string Province { get; set; }
 		public string District { get; set; }
-		//public Plan Plan { set; get; }
+		public PlanResource Plan{ set; get; }
+		public DateTime StartSubscription { set; get; }
+		public DateTime EndSubsciption { set; get; }
 	}
 }

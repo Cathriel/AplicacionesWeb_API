@@ -17,5 +17,6 @@ namespace Roomies.API.Resources
         public int RoomQuantity { set; get; }
         public int BathroomQuantity { set; get; }
         public DateTime PostDate { set; get; }
+        public LandlordResource Landlord { set; get; }
     }
 }

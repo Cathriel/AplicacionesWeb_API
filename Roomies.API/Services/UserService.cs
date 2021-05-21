@@ -1,4 +1,6 @@
 ﻿using Roomies.API.Domain.Models;
+using Roomies.API.Domain.Persistence.Repositories;
+using Roomies.API.Domain.Repositories;
 using Roomies.API.Domain.Services;
 using Roomies.API.Domain.Services.Communications;
 using System;
@@ -8,43 +10,87 @@ using System.Threading.Tasks;
 
 namespace Roomies.API.Services
 {
-//    public class UserService : IUserService
-//    {
-//        private readonly IUserRepository _userRepository;
+    public class UserService : IUserService
+    {
+        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-//        public Task<UserResponse> DeleteAsync(int id)
-//        {
-//            throw new NotImplementedException();
-//        }
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
+        {
+            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
+        }
 
-//        public Task<UserResponse> GetByIdAsync(int id)
-//        {
-//            throw new NotImplementedException();
-//        }
+        public async Task<UserResponse> DeleteAsync(string id)
+        {
+            var existingUser = await _userRepository.FindById(id);
 
-//        public Task<IEnumerable<User>> ListAsync()
-//        {
-//            throw new NotImplementedException();
-//        }
+            if (existingUser == null)
+                return new UserResponse("Usuario inexistente");
 
-//        public Task<IEnumerable<User>> ListByConversationIdAsync(int conversationId)
-//        {
-//            throw new NotImplementedException();
-//        }
+            try
+            {
+                _userRepository.Remove(existingUser);
+                await _unitOfWork.CompleteAsync();
 
-//        public Task<IEnumerable<User>> ListByPaymentMethodIdAsync(int paymentMethodId)
-//        {
-//            throw new NotImplementedException();
-//        }
+                return new UserResponse(existingUser);
+            }
+            catch (Exception ex)
+            {
+                return new UserResponse($"Un error ocurrió al eliminar el usuario: {ex.Message}");
+            }
+        }
 
-//        public Task<UserResponse> SaveAsync(User user)
-//        {
-//            throw new NotImplementedException();
-//        }
+        public async Task<UserResponse> GetByIdAsync(string id)
+        {
+            var existingUser = await _userRepository.FindById(id);
 
-//        public Task<UserResponse> UpdateAsync(int id, User user)
-//        {
-//            throw new NotImplementedException();
-//        }
-//    }
+            if (existingUser == null)
+                return new UserResponse("Usuario inexistente");
+
+            return new UserResponse(existingUser);
+        }
+
+        public async Task<IEnumerable<User>> ListAsync()
+        {
+            return await _userRepository.ListAsync();
+        }
+
+        public async Task<UserResponse> SaveAsync(User user)
+        {
+            try
+            {
+                await _userRepository.AddAsync(user);
+                await _unitOfWork.CompleteAsync();
+
+                return new UserResponse(user);
+            }
+            catch (Exception ex)
+            {
+                return new UserResponse($"Un error ocurrió al guardar el usuario: {ex.Message}");
+            }
+        }
+
+        public async Task<UserResponse> UpdateAsync(string id, User user)
+        {
+            var existingUser = await _userRepository.FindById(id);
+
+            if (existingUser == null)
+                return new UserResponse("Usuario inexistente");
+
+            existingUser.Name = user.Name;
+
+            try
+            {
+                _userRepository.Update(existingUser);
+                await _unitOfWork.CompleteAsync();
+
+                return new UserResponse(existingUser);
+            }
+            catch (Exception ex)
+            {
+                return new UserResponse($"Un error ocurrió al actualizar el usuario: {ex.Message}");
+            }
+        }
+    }
 }

@@ -8,6 +8,6 @@ namespace Roomies.API.Domain.Models
     public class Landlord : User
     {
         public List<Post> Posts { get; set; }
-        public List<Review> Reviews { get; set; }
+        
     }
 }

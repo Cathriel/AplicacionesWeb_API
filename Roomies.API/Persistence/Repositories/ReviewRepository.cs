@@ -30,14 +30,6 @@ namespace Roomies.API.Persistence.Repositories
             return await _context.Reviews.ToListAsync();
         }
 
-        public async Task<IEnumerable<Review>> ListByLandlordId(string landlordId)
-        {
-
-            return await _context.Reviews
-               .Where(p => p.LandlordId == landlordId)
-               .Include(p => p.Landlord)
-               .ToListAsync();
-        }
 
         public async Task<IEnumerable<Review>> ListByLeaseholderId(string leaseholderId)
         {

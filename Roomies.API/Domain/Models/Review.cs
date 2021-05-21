@@ -13,8 +13,6 @@ namespace Roomies.API.Domain.Models
         public int StarQuantity { set; get; }
         public Leaseholder Leaseholder { set; get; }
         public string LeaseholderId { set; get; }
-        public Landlord Landlord { set; get; }
-        public string LandlordId { set; get; }
         public Post Post { set; get; }
         public string PostId { set; get; }
 

@@ -17,6 +17,9 @@ namespace Roomies.API.Mapping
             CreateMap<SavePostResource, Post>();
             CreateMap<SaveReviewResource, Review>();
             CreateMap<SaveUserResource, User>();
+            CreateMap<SaveLandlordResource, Landlord>();
+            CreateMap<SaveLeaseholderResource, Leaseholder>();
+            
             
         }
     }

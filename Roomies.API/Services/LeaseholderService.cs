@@ -81,19 +81,19 @@ namespace Roomies.API.Services
 
         public async Task<LeaseholderResponse> UpdateAsync(string id, Leaseholder leaseholder)
         {
-            var existingLandlord = await _leaseholderRepository.FindById(id);
+            var existingLeaseholder= await _leaseholderRepository.FindById(id);
 
-            if (existingLandlord == null)
+            if (existingLeaseholder == null)
                 return new LeaseholderResponse("Arrendatario inexistente");
 
-            existingLandlord.Name = leaseholder.Name;
+            existingLeaseholder = leaseholder;
 
             try
             {
-                _leaseholderRepository.Update(existingLandlord);
+                _leaseholderRepository.Update(existingLeaseholder);
                 await _unitOfWork.CompleteAsync();
 
-                return new LeaseholderResponse(existingLandlord);
+                return new LeaseholderResponse(existingLeaseholder);
             }
             catch (Exception ex)
             {

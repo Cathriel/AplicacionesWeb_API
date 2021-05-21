@@ -63,12 +63,6 @@ namespace Roomies.API.Services
             return await _postRepository.ListByLandlordIdAsync(landlordId);
         }
 
-        public async Task<IEnumerable<Post>> ListByLeaseholderIdAsync(string leasholderId)
-        {
-            var favouritePost = await _favouritePostRepository.ListByLeaseholderIdAsync(leasholderId);
-            var posts = favouritePost.Select(pt => pt.Post).ToList();
-            return posts;
-        }
 
         public async Task<PostResponse> SaveAsync(Post post)
         {
