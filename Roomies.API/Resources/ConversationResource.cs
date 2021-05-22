@@ -7,9 +7,9 @@ namespace Roomies.API.Resources
 {
     public class ConversationResource
     {
-        public string Id { set; get; }
-        public UserResource User1Resource { set; get; }
-       // public UserResource User2Resource { set; get; }
+        public int Id { set; get; }
+        public UserResource User1 { set; get; }
+        public UserResource User2 { set; get; }
 
         public DateTime DateCreation { set; get; }
     }

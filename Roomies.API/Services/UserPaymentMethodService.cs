@@ -21,7 +21,7 @@ namespace Roomies.API.Services
         }
 
 
-        public async Task<UserPaymentMethodResponse> AssignUserPaymentMethodAsync(string userId, string paymentMethodId)
+        public async Task<UserPaymentMethodResponse> AssignUserPaymentMethodAsync(int userId, int paymentMethodId)
         {
             try
             {
@@ -43,17 +43,17 @@ namespace Roomies.API.Services
             return await _userPaymentMethodRepository.ListAsync();
         }
 
-        public async Task<IEnumerable<UserPaymentMethod>> ListByPaymentMethodIdAsync(string paymentMethodId)
+        public async Task<IEnumerable<UserPaymentMethod>> ListByPaymentMethodIdAsync(int paymentMethodId)
         {
             return await _userPaymentMethodRepository.ListByPaymentMethodIdAsync(paymentMethodId);
         }
 
-        public async Task<IEnumerable<UserPaymentMethod>> ListByUserIdAsync(string userId)
+        public async Task<IEnumerable<UserPaymentMethod>> ListByUserIdAsync(int userId)
         {
             return await _userPaymentMethodRepository.ListByUserIdAsync(userId);
         }
 
-        public async Task<UserPaymentMethodResponse> UnassignUserPaymentMethodAsync(string userId, string paymentMethodId)
+        public async Task<UserPaymentMethodResponse> UnassignUserPaymentMethodAsync(int userId, int paymentMethodId)
         {
             try
             {

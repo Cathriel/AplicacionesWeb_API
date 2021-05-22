@@ -13,15 +13,17 @@ namespace Roomies.API.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IPlanRepository _planRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
+        public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository = null)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
+            _planRepository = planRepository;
         }
 
-        public async Task<UserResponse> DeleteAsync(string id)
+        public async Task<UserResponse> DeleteAsync(int id)
         {
             var existingUser = await _userRepository.FindById(id);
 
@@ -41,7 +43,7 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<UserResponse> GetByIdAsync(string id)
+        public async Task<UserResponse> GetByIdAsync(int id)
         {
             var existingUser = await _userRepository.FindById(id);
 
@@ -56,10 +58,18 @@ namespace Roomies.API.Services
             return await _userRepository.ListAsync();
         }
 
-        public async Task<UserResponse> SaveAsync(User user)
+        public async Task<UserResponse> SaveAsync(User user,int planId)
         {
+
+            var existingPlan = await _planRepository.FindById(planId);
+
+            if (existingPlan == null)
+                return new UserResponse("Plan inexistente");
+
             try
             {
+                user.PlanId = planId;
+                
                 await _userRepository.AddAsync(user);
                 await _unitOfWork.CompleteAsync();
 
@@ -71,7 +81,7 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<UserResponse> UpdateAsync(string id, User user)
+        public async Task<UserResponse> UpdateAsync(int id, User user)
         {
             var existingUser = await _userRepository.FindById(id);
 
@@ -79,6 +89,17 @@ namespace Roomies.API.Services
                 return new UserResponse("Usuario inexistente");
 
             existingUser.Name = user.Name;
+            existingUser.LastName = user.LastName;
+            existingUser.Password = user.Password;
+            existingUser.Email = user.Email;
+            existingUser.Province = user.Province;
+            existingUser.District = user.District;
+            existingUser.Address = user.Address;
+            existingUser.Birthday = user.Birthday;
+            existingUser.CellPhone = user.CellPhone;
+            existingUser.Department = user.Department;
+            existingUser.IdCard = user.IdCard;
+            existingUser.Description = user.Description;
 
             try
             {

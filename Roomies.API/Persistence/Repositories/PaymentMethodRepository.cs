@@ -20,12 +20,12 @@ namespace Roomies.API.Persistence.Repositories
             await _context.PaymentMethods.AddAsync(paymentMethod);
         }
 
-        public async Task<PaymentMethod> FindById(string id)
+        public async Task<PaymentMethod> FindById(int id)
         {
             return await _context.PaymentMethods.FindAsync(id);
         }
 
-        public async Task<PaymentMethod> FindByIdAsync(string id)
+        public async Task<PaymentMethod> FindByIdAsync(int id)
         {
             return await _context.PaymentMethods.FindAsync(id);
         }

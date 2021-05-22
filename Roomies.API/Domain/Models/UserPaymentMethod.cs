@@ -7,8 +7,8 @@ namespace Roomies.API.Domain.Models
 {
     public class UserPaymentMethod
     {
-        public string UserId { get; set; }
-        public string PaymentMethodId { get; set; }
+        public int UserId { get; set; }
+        public int PaymentMethodId { get; set; }
         public User User { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
     }

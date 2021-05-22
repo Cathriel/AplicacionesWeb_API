@@ -20,7 +20,7 @@ namespace Roomies.API.Persistence.Repositories
             await _context.FavouritePosts.AddAsync(favouritePost);
         }
 
-        public async Task AssignFavouritePostAsync(string postId, string leaseholderId)
+        public async Task AssignFavouritePostAsync(int postId, int leaseholderId)
         {
             FavouritePost favouritePost = await FindByPostIdAndLeaseholderId(postId, leaseholderId);
             if (favouritePost == null)
@@ -30,7 +30,7 @@ namespace Roomies.API.Persistence.Repositories
             }
         }
 
-        public async Task<FavouritePost> FindByPostIdAndLeaseholderId(string postId, string leaseholderId)
+        public async Task<FavouritePost> FindByPostIdAndLeaseholderId(int postId, int leaseholderId)
         {
             return await _context.FavouritePosts.FindAsync(postId, leaseholderId);
         }
@@ -43,7 +43,7 @@ namespace Roomies.API.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<FavouritePost>> ListByLeaseholderIdAsync(string leaseholderId)
+        public async Task<IEnumerable<FavouritePost>> ListByLeaseholderIdAsync(int leaseholderId)
         {
             return await _context.FavouritePosts
                 .Where(pt => pt.LeaseholderId == leaseholderId )
@@ -52,7 +52,7 @@ namespace Roomies.API.Persistence.Repositories
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<FavouritePost>> ListByPostIdAsync(string postId)
+        public async Task<IEnumerable<FavouritePost>> ListByPostIdAsync(int postId)
         {
             return await _context.FavouritePosts
                .Where(pt => pt.PostId == postId)
@@ -67,7 +67,7 @@ namespace Roomies.API.Persistence.Repositories
             _context.FavouritePosts.Remove(favouritePost);
         }
 
-        public async Task UnassignFavouritePostAsync(string postId, string leaseholderId)
+        public async Task UnassignFavouritePostAsync(int postId, int leaseholderId)
         {
             FavouritePost favouritePost = await FindByPostIdAndLeaseholderId(postId, leaseholderId);
             if (favouritePost != null)

@@ -20,7 +20,7 @@ namespace Roomies.API.Persistence.Repositories
             await _context.Plans.AddAsync(plan);
         }
 
-        public async Task<Plan> FindById(string id)
+        public async Task<Plan> FindById(int id)
         {
             return await _context.Plans.FindAsync(id);
         }

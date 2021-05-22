@@ -13,7 +13,7 @@ namespace Roomies.API.Mapping
         public ResourceToModelProfile()
         {
             CreateMap<SaveMessageResource, Message>();
-            CreateMap<SavePaymentMethod, PaymentMethod>();
+            CreateMap<SavePaymentMethodResource, PaymentMethod>();
             CreateMap<SavePostResource, Post>();
             CreateMap<SaveReviewResource, Review>();
             CreateMap<SaveUserResource, User>();

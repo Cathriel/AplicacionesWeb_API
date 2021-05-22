@@ -9,9 +9,9 @@ namespace Roomies.API.Domain.Repositories
     public interface IPostRepository
     {
         Task<IEnumerable<Post>> ListAsync();
-        Task<IEnumerable<Post>> ListByLandlordIdAsync(string landlordId);
+        Task<IEnumerable<Post>> ListByLandlordIdAsync(int landlordId);
         Task AddAsync(Post post);
-        Task<Post> FindById(string postId);
+        Task<Post> FindById(int postId);
         void Update(Post post);
         void Remove(Post post);
         

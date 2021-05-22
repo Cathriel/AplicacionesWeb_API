@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Roomies.API.Resources
 {
-    public class SavePaymentMethod
+    public class SavePaymentMethodResource
     {
         [Required]
-        [MaxLength(16)]
-        public string Id { get; set; }
+        public int Id { get; set; }
         [Required]
         [MaxLength(3)]
         public string CVV { get; set; }

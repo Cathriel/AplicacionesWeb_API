@@ -9,7 +9,7 @@ namespace Roomies.API.Domain.Repositories
     public interface ILeaseholderRepository
     {
         Task<IEnumerable<Leaseholder>> ListAsync();
-        Task<Leaseholder> FindById(string id);
+        Task<Leaseholder> FindById(int id);
         Task AddAsync(Leaseholder leaseholder);
         void Update(Leaseholder leaseholder);
         void Remove(Leaseholder leaseholder);

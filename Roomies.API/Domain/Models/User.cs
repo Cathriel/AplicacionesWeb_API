@@ -7,7 +7,7 @@ namespace Roomies.API.Domain.Models
 {
     public class User
     {
-		public string IdUser { get; set; }
+		public int IdUser { get; set; }
 		public string Email { get; set; }
 		public string Password { get; set; }
 		public string Name { get; set; }
@@ -21,9 +21,10 @@ namespace Roomies.API.Domain.Models
 		public string District { get; set; }
 		public string Address { get; set; }
 		public List<UserPaymentMethod> UserPaymentMethods { get; set; }
-		public List<Conversation> Conversations { get; set; }
+		public List<Conversation> Conversation1 { get; set; }
+		public List<Conversation> Conversation2 { get; set; }
 
-		public string PlanId { set; get; } 
+		public int PlanId { set; get; } 
 		public Plan Plan { set; get; }
 
 		public DateTime StartSubscription { set; get; }

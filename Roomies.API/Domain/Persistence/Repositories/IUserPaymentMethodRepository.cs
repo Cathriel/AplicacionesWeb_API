@@ -9,13 +9,13 @@ namespace Roomies.API.Domain.Repositories
     public interface IUserPaymentMethodRepository
     {
         Task<IEnumerable<UserPaymentMethod>> ListAsync();
-        Task<IEnumerable<UserPaymentMethod>> ListByPaymentMethodIdAsync(string paymentMethodId);
-        Task<IEnumerable<UserPaymentMethod>> ListByUserIdAsync(string userId);
+        Task<IEnumerable<UserPaymentMethod>> ListByPaymentMethodIdAsync(int paymentMethodId);
+        Task<IEnumerable<UserPaymentMethod>> ListByUserIdAsync(int userId);
         void Remove(UserPaymentMethod userPaymentMethod);
         Task AddAsync(UserPaymentMethod userPaymentMethod);
-        Task<UserPaymentMethod> FindByUserIdAndPaymentMethodId(string userId, string paymentMethodId);
-        Task AssignUserPaymentMethodAsync(string userId, string paymentMethodId);
-        Task UnassignUserPaymentMethodAsync(string userId, string paymentMethodId);
+        Task<UserPaymentMethod> FindByUserIdAndPaymentMethodId(int userId, int paymentMethodId);
+        Task AssignUserPaymentMethodAsync(int userId, int paymentMethodId);
+        Task UnassignUserPaymentMethodAsync(int userId, int paymentMethodId);
 
     }
 }

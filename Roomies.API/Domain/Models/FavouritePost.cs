@@ -7,9 +7,9 @@ namespace Roomies.API.Domain.Models
 {
     public class FavouritePost
     {
-        public string PostId { set; get; }
+        public int PostId { set; get; }
         public Post Post { set; get; }
-        public string LeaseholderId { set; get; }
+        public int LeaseholderId { set; get; }
         public Leaseholder Leaseholder { set; get; }
 
     }

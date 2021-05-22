@@ -21,7 +21,7 @@ namespace Roomies.API.Services
         }
  
 
-        public async Task<FavouritePostResponse> AssignFavouritePostAsync(string postId, string leaseholderId)
+        public async Task<FavouritePostResponse> AssignFavouritePostAsync(int postId, int leaseholderId)
         {
             try
             {
@@ -42,17 +42,17 @@ namespace Roomies.API.Services
             return await _favouritePostRepository.ListAsync();
         }
 
-        public async Task<IEnumerable<FavouritePost>> ListByLeaseholderIdAsync(string leaseholderId)
+        public async Task<IEnumerable<FavouritePost>> ListByLeaseholderIdAsync(int leaseholderId)
         {
             return await _favouritePostRepository.ListByLeaseholderIdAsync(leaseholderId);
         }
 
-        public async Task<IEnumerable<FavouritePost>> ListByPostIdAsync(string postId)
+        public async Task<IEnumerable<FavouritePost>> ListByPostIdAsync(int postId)
         {
             return await _favouritePostRepository.ListByPostIdAsync(postId);
         }
 
-        public async Task<FavouritePostResponse> UnassignFavouritePostAsync(string postId, string leaseholderId)
+        public async Task<FavouritePostResponse> UnassignFavouritePostAsync(int postId, int leaseholderId)
         {
 
             try

@@ -7,7 +7,7 @@ namespace Roomies.API.Domain.Models
 {
     public class Post
     {
-        public string Id { set; get; }
+        public int Id { set; get; }
         public string Title { set; get; }
         public string Address { set; get; }
         public string Province { set; get; }
@@ -20,6 +20,6 @@ namespace Roomies.API.Domain.Models
         public List<Review> Reviews { set; get; }
         public List<FavouritePost> FavouritePosts { set; get; }
         public Landlord Landlord { set; get; }
-        public string LandlordId { set; get; }
+        public int LandlordId { set; get; }
     }
 }

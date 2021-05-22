@@ -9,8 +9,8 @@ namespace Roomies.API.Domain.Repositories
     public interface IMessageRepository
     {
         Task<IEnumerable<Message>> ListAsync();
-        Task<IEnumerable<Message>> ListByConversationIdAsync(string conversationId);
-        Task<Message> FindById(string id);
+        Task<IEnumerable<Message>> ListByConversationIdAsync(int conversationId);
+        Task<Message> FindById(int id);
         Task AddAsync(Message message);
         void Update(Message message);
         void Remove(Message message);

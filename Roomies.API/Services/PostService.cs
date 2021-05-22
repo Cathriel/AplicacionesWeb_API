@@ -12,18 +12,22 @@ namespace Roomies.API.Services
     public class PostService : IPostService
     {
         private readonly IPostRepository _postRepository;
+        private readonly ILandlordRepository _landlordRepository;
+        private readonly ILeaseholderRepository _leaseholderRepository;
         private readonly IFavouritePostRepository _favouritePostRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PostService(IPostRepository postRepository, IUnitOfWork unitOfWork, IFavouritePostRepository favouritePostRepository)
+        public PostService(IPostRepository postRepository, IUnitOfWork unitOfWork, IFavouritePostRepository favouritePostRepository, ILandlordRepository landlordRepository = null, ILeaseholderRepository leaseholderRepository = null)
         {
             _postRepository = postRepository;
             _favouritePostRepository = favouritePostRepository;
             _unitOfWork = unitOfWork;
+            _landlordRepository = landlordRepository;
+            _leaseholderRepository = leaseholderRepository;
         }
 
 
-        public async Task<PostResponse> DeleteAsync(string id)
+        public async Task<PostResponse> DeleteAsync(int id)
         {
             var existingPost = await _postRepository.FindById(id);
 
@@ -43,7 +47,7 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<PostResponse> GetByIdAsync(string postId)
+        public async Task<PostResponse> GetByIdAsync(int postId)
         {
             var existingPost= await _postRepository.FindById(postId);
 
@@ -58,16 +62,31 @@ namespace Roomies.API.Services
             return await _postRepository.ListAsync();
         }
 
-        public async Task<IEnumerable<Post>> ListByLandlordIdAsync(string landlordId)
+        public async Task<IEnumerable<Post>> ListByLandlordIdAsync(int landlordId)
         {
             return await _postRepository.ListByLandlordIdAsync(landlordId);
         }
 
-
-        public async Task<PostResponse> SaveAsync(Post post)
+        public async Task<IEnumerable<Post>> ListByLeaseholderIdAsync(int leaseholderId)
         {
+            var favouritePosts = await _favouritePostRepository.ListByLeaseholderIdAsync(leaseholderId);
+            var post = favouritePosts.Select(pt => pt.Post).ToList();
+            return post;
+        }
+
+
+        public async Task<PostResponse> SaveAsync(Post post,int landlordId)
+        {
+            var existingLandlord = await _landlordRepository.FindById(landlordId);
+
+            if (existingLandlord== null)
+                return new PostResponse("Arrendador inexistente");
+
+
             try
             {
+                post.LandlordId = landlordId;
+
                 await _postRepository.AddAsync(post);
                 await _unitOfWork.CompleteAsync();
 
@@ -79,7 +98,7 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<PostResponse> UpdateAsync(string id, Post post)
+        public async Task<PostResponse> UpdateAsync(int id, Post post)
         {
             var existingPost = await _postRepository.FindById(id);
 
@@ -87,6 +106,13 @@ namespace Roomies.API.Services
                 return new PostResponse("Post inexistente");
 
             existingPost.Title = post.Title;
+            existingPost.Address = post.Address;
+            existingPost.BathroomQuantity = post.BathroomQuantity;
+            existingPost.Price = post.Price;
+            existingPost.Province = post.Province;
+            existingPost.District = post.District;
+            existingPost.Department = post.Department;
+            existingPost.RoomQuantity = post.RoomQuantity;
 
             try
             {

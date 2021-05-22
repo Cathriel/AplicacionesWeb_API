@@ -20,7 +20,7 @@ namespace Roomies.API.Persistence.Repositories
             await _context.UserPaymentMethods.AddAsync(userPaymentMethod);
         }
 
-        public async Task AssignUserPaymentMethodAsync(string userId, string paymentMethodId)
+        public async Task AssignUserPaymentMethodAsync(int userId, int paymentMethodId)
         {
             UserPaymentMethod userPaymentMethod = await FindByUserIdAndPaymentMethodId(userId, paymentMethodId);
             if (userPaymentMethod == null)
@@ -30,7 +30,7 @@ namespace Roomies.API.Persistence.Repositories
             }
         }
 
-        public async Task<UserPaymentMethod> FindByUserIdAndPaymentMethodId(string userId, string paymentMethodId)
+        public async Task<UserPaymentMethod> FindByUserIdAndPaymentMethodId(int userId, int paymentMethodId)
         {
             return await _context.UserPaymentMethods.FindAsync(userId, paymentMethodId);
         }
@@ -40,7 +40,7 @@ namespace Roomies.API.Persistence.Repositories
             return await _context.UserPaymentMethods.ToListAsync();
         }
 
-        public async Task<IEnumerable<UserPaymentMethod>> ListByPaymentMethodIdAsync(string paymentMethodId)
+        public async Task<IEnumerable<UserPaymentMethod>> ListByPaymentMethodIdAsync(int paymentMethodId)
         {
             return await _context.UserPaymentMethods
                .Where(pt => pt.PaymentMethodId == paymentMethodId)
@@ -49,7 +49,7 @@ namespace Roomies.API.Persistence.Repositories
                .ToListAsync();
         }
 
-        public async Task<IEnumerable<UserPaymentMethod>> ListByUserIdAsync(string userId)
+        public async Task<IEnumerable<UserPaymentMethod>> ListByUserIdAsync(int userId)
         {
             return await _context.UserPaymentMethods
                .Where(pt => pt.UserId == userId)
@@ -63,7 +63,7 @@ namespace Roomies.API.Persistence.Repositories
             _context.UserPaymentMethods.Remove(userPaymentMethod);
         }
 
-        public async Task UnassignUserPaymentMethodAsync(string userId, string paymentMethodId)
+        public async Task UnassignUserPaymentMethodAsync(int userId, int paymentMethodId)
         {
             UserPaymentMethod userPaymentMethod = await FindByUserIdAndPaymentMethodId(userId, paymentMethodId);
             if (userPaymentMethod != null)

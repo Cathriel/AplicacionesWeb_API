@@ -7,7 +7,7 @@ namespace Roomies.API.Resources
 {
     public class PostResource
     {
-        public string Id { set; get; }
+        public int Id { set; get; }
         public string Title { set; get; }
         public string Address { set; get; }
         public string Province { set; get; }

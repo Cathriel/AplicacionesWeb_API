@@ -10,9 +10,9 @@ namespace Roomies.API.Domain.Services
     public interface IPaymentMethodService
     {
         Task<IEnumerable<PaymentMethod>> ListAsync();
-        Task<IEnumerable<PaymentMethod>> ListByUserIdAsync(string userId);
-        Task<PaymentMethodResponse> GetByIdAsync(string id);
+        Task<IEnumerable<PaymentMethod>> ListByUserIdAsync(int userId);
+        Task<PaymentMethodResponse> GetByIdAsync(int id);
         Task<PaymentMethodResponse> SaveAsync(PaymentMethod paymentMethod);
-        Task<PaymentMethodResponse> DeleteAsync(string id);
+        Task<PaymentMethodResponse> DeleteAsync(int id);
     }
 }

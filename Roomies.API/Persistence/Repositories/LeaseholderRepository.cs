@@ -20,7 +20,7 @@ namespace Roomies.API.Persistence.Repositories
             await _context.Leaseholders.AddAsync(leaseholder);
         }
 
-        public async Task<Leaseholder> FindById(string id)
+        public async Task<Leaseholder> FindById(int id)
         {
             return await _context.Leaseholders.FindAsync(id);
         }

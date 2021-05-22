@@ -10,7 +10,7 @@ namespace Roomies.API.Domain.Repositories
     {
         Task<IEnumerable<Plan>> ListAsync();
         Task AddAsync(Plan plan);
-        Task<Plan> FindById(string id);
+        Task<Plan> FindById(int id);
         void Update(Plan plan);
         void Remove(Plan plan);
     }

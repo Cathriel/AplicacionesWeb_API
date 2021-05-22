@@ -7,7 +7,7 @@ namespace Roomies.API.Resources
 {
     public class PaymentMethodResource
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string CVV { get; set; }
         public DateTime ExpiryDate { get; set; }
     }

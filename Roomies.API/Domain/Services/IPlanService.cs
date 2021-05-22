@@ -10,9 +10,9 @@ namespace Roomies.API.Domain.Services
     public interface IPlanService
     {
         Task<IEnumerable<Plan>> ListAsync();
-        Task<PlanResponse> GetByIdAsync(string id);
+        Task<PlanResponse> GetByIdAsync(int id);
         Task<PlanResponse> SaveAsync(Plan plan);
-        Task<PlanResponse> UpdateAsync(string id, Plan plan);
-        Task<PlanResponse> DeleteAsync(string id);
+        Task<PlanResponse> UpdateAsync(int id, Plan plan);
+        Task<PlanResponse> DeleteAsync(int id);
     }
 }

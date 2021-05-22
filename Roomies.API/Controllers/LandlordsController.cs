@@ -43,7 +43,7 @@ namespace Roomies.API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(LandlordResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
-        public async Task<IActionResult> GetAsync(string id)
+        public async Task<IActionResult> GetAsync(int id)
         {
             var result = await _landlordService.GetByIdAsync(id);
 
@@ -55,14 +55,14 @@ namespace Roomies.API.Controllers
         }
         //---------------------------
 
-        [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody] SaveLandlordResource resource)
+        [HttpPost("plans/{planId}/landlords")]
+        public async Task<IActionResult> PostAsync([FromBody] SaveLandlordResource resource,int planId)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var landlord = _mapper.Map<SaveLandlordResource, Landlord>(resource);
-            var result = await _landlordService.SaveAsync(landlord);
+            var result = await _landlordService.SaveAsync(landlord,planId);
 
             if (!result.Success)
                 return BadRequest(result.Message);
@@ -73,7 +73,7 @@ namespace Roomies.API.Controllers
         }
         //-------------
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(string id, [FromBody] SaveLandlordResource resource)
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveLandlordResource resource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
@@ -91,7 +91,7 @@ namespace Roomies.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAsync(string id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             var result = await _landlordService.DeleteAsync(id);
 

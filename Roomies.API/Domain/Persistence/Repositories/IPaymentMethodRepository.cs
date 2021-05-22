@@ -10,7 +10,7 @@ namespace Roomies.API.Domain.Repositories
     {
         Task<IEnumerable<PaymentMethod>> ListAsync();
         Task AddAsync(PaymentMethod paymentMethod);
-        Task<PaymentMethod> FindById(string id);        
+        Task<PaymentMethod> FindById(int id);        
         void Remove(PaymentMethod paymentMethod);
         void Update(PaymentMethod paymentMethod);
     }

@@ -23,7 +23,7 @@ namespace Roomies.API.Services
         }
 
 
-        public async Task<PaymentMethodResponse> DeleteAsync(string id)
+        public async Task<PaymentMethodResponse> DeleteAsync(int id)
         {
             var existingPaymentMethod = await _paymentMethodRepository.FindById(id);
 
@@ -43,7 +43,7 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<PaymentMethodResponse> GetByIdAsync(string id)
+        public async Task<PaymentMethodResponse> GetByIdAsync(int id)
         {
             var existingPaymentMethod = await _paymentMethodRepository.FindById(id);
 
@@ -58,7 +58,7 @@ namespace Roomies.API.Services
             return await _paymentMethodRepository.ListAsync();
         }
 
-        public async Task<IEnumerable<PaymentMethod>> ListByUserIdAsync(string userId)
+        public async Task<IEnumerable<PaymentMethod>> ListByUserIdAsync(int userId)
         {
             var userPaymentMethods = await _userPaymentMethodRepository.ListByUserIdAsync(userId);
             var paymentMethod= userPaymentMethods.Select(pt => pt.PaymentMethod).ToList();

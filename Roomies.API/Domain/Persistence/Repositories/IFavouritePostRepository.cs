@@ -10,13 +10,13 @@ namespace Roomies.API.Domain.Repositories
     public interface IFavouritePostRepository
     {
         Task<IEnumerable<FavouritePost>> ListAsync();
-        Task<IEnumerable<FavouritePost>> ListByPostIdAsync(string postId);
-        Task<IEnumerable<FavouritePost>> ListByLeaseholderIdAsync(string leaseholderId);
-        Task<FavouritePost> FindByPostIdAndLeaseholderId(string postId,string leaseholderId);
+        Task<IEnumerable<FavouritePost>> ListByPostIdAsync(int postId);
+        Task<IEnumerable<FavouritePost>> ListByLeaseholderIdAsync(int leaseholderId);
+        Task<FavouritePost> FindByPostIdAndLeaseholderId(int postId, int leaseholderId);
         Task AddAsync(FavouritePost favouritePost);
         void Remove(FavouritePost favouritePost);
-        Task AssignFavouritePostAsync(string postId, string leaseholderId);
-        Task UnassignFavouritePostAsync(string postId, string leaseholderId);
+        Task AssignFavouritePostAsync(int postId, int leaseholderId);
+        Task UnassignFavouritePostAsync(int postId, int leaseholderId);
 
     }
 }

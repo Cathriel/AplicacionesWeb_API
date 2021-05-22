@@ -1,4 +1,5 @@
 ﻿using Roomies.API.Domain.Models;
+using Roomies.API.Domain.Persistence.Repositories;
 using Roomies.API.Domain.Repositories;
 using Roomies.API.Domain.Services;
 using Roomies.API.Domain.Services.Communications;
@@ -12,17 +13,18 @@ namespace Roomies.API.Services
     public class ConversationService : IConversationService
     {
         private readonly IConversationRepository _conversationRepository;
+        private readonly IUserRepository _userRepository;
         public readonly IUnitOfWork _unitOfWork;
 
-        public ConversationService(IUnitOfWork unitOfWork, IConversationRepository conversationRepository)
+        public ConversationService(IUnitOfWork unitOfWork, IConversationRepository conversationRepository, IUserRepository userRepository = null)
         {
             _conversationRepository = conversationRepository;
             _unitOfWork = unitOfWork;
-            
+            _userRepository = userRepository;
         }
 
 
-        public async Task<ConversationResponse> DeleteAsync(string id)
+        public async Task<ConversationResponse> DeleteAsync(int id)
         {
             var existingConversation = await _conversationRepository.FindById(id);
 
@@ -42,7 +44,7 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<ConversationResponse> GetByIdAsync(string id)
+        public async Task<ConversationResponse> GetByIdAsync(int id)
         {
             var existingConversation = await _conversationRepository.FindById(id);
 
@@ -51,6 +53,7 @@ namespace Roomies.API.Services
 
             return new ConversationResponse(existingConversation);
         }
+
 
         public async Task<IEnumerable<Conversation>> ListAsync()
         {

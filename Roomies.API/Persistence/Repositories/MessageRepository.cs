@@ -20,7 +20,7 @@ namespace Roomies.API.Persistence.Repositories
             await _context.Messages.AddAsync(message);
         }
 
-        public async Task<Message> FindById(string id)
+        public async Task<Message> FindById(int id)
         {
             return await _context.Messages.FindAsync(id);
         }
@@ -30,7 +30,7 @@ namespace Roomies.API.Persistence.Repositories
             return await _context.Messages.ToListAsync();
         }
 
-        public async Task<IEnumerable<Message>> ListByConversationIdAsync(string conversationId)
+        public async Task<IEnumerable<Message>> ListByConversationIdAsync(int conversationId)
         {
             return await _context.Messages
                 .Where(p => p.ConversationId == conversationId)

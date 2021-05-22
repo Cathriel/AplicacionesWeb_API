@@ -12,15 +12,17 @@ namespace Roomies.API.Services
     public class LandlordService : ILandlordService
     {
         private readonly ILandlordRepository _landlordRepository;
+        private readonly IPlanRepository _planRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public LandlordService(ILandlordRepository landlordRepository, IUnitOfWork unitOfWork)
+        public LandlordService(ILandlordRepository landlordRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository = null)
         {
             _landlordRepository = landlordRepository;
             _unitOfWork = unitOfWork;
+            _planRepository = planRepository;
         }
 
-        public async Task<LandlordResponse> DeleteAsync(string id)
+        public async Task<LandlordResponse> DeleteAsync(int id)
         {
             var existingLandlord = await _landlordRepository.FindById(id);
 
@@ -40,7 +42,7 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<LandlordResponse> GetByIdAsync(string id)
+        public async Task<LandlordResponse> GetByIdAsync(int id)
         {
             var existingLandlord = await _landlordRepository.FindById(id);
 
@@ -55,10 +57,18 @@ namespace Roomies.API.Services
             return await _landlordRepository.ListAsync();
         }
 
-        public async Task<LandlordResponse> SaveAsync(Landlord landlord)
+        public async Task<LandlordResponse> SaveAsync(Landlord landlord,int planId)
         {
+            var existingPlan = await _planRepository.FindById(planId);
+
+            if (existingPlan == null)
+                return new LandlordResponse("Plan inexistente");
+
             try
             {
+
+                landlord.PlanId = planId;
+
                 await _landlordRepository.AddAsync(landlord);
                 await _unitOfWork.CompleteAsync();
 
@@ -70,22 +80,24 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<LandlordResponse> UpdateAsync(string id, Landlord landlord)
+        public async Task<LandlordResponse> UpdateAsync(int id, Landlord landlord)
         {
             var existingLandlord = await _landlordRepository.FindById(id);
 
             if (existingLandlord == null)
                 return new LandlordResponse("Arrendador inexistente");
 
-            //existingLandlord.Name = landlord.Name;
-            //existingLandlord.Address = landlord.Address;
-            //existingLandlord.Birthday = landlord.Birthday;
-            //existingLandlord.Email = landlord.Email;
-            //existingLandlord.Department = landlord.Department;
-            //existingLandlord.CellPhone = landlord.CellPhone;
-            //existingLandlord.District = landlord.District;
-            //existingLandlord.LastName = landlord.LastName;
-            existingLandlord = landlord;
+            existingLandlord.Name = landlord.Name;
+            existingLandlord.Address = landlord.Address;
+            existingLandlord.Birthday = landlord.Birthday;
+            existingLandlord.Email = landlord.Email;
+            existingLandlord.Department = landlord.Department;
+            existingLandlord.CellPhone = landlord.CellPhone;
+            existingLandlord.District = landlord.District;
+            existingLandlord.LastName = landlord.LastName;
+            existingLandlord.Province = landlord.Province;
+            existingLandlord.IdCard = landlord.IdCard;
+            existingLandlord.Password = landlord.Password;
 
             try
             {

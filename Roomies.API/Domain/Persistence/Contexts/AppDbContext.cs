@@ -81,14 +81,14 @@ namespace Roomies.API.Domain.Persistence.Contexts
 
             // Relationships 
             builder.Entity<User>()
-                .HasMany(p => p.Conversations)
+                .HasMany(p => p.Conversation1)
                 .WithOne(p => p.User1)
                 .HasForeignKey(p => p.User1Id);
 
-            //builder.Entity<User>()
-            //   .HasMany(p => p.Conversations)
-            //   .WithOne(p => p.User2)
-            //   .HasForeignKey(p => p.User2Id);
+            builder.Entity<User>()
+               .HasMany(p => p.Conversation2)
+               .WithOne(p => p.User2)
+               .HasForeignKey(p => p.User2Id);
 
 
             //Landlord Entity
@@ -143,10 +143,10 @@ namespace Roomies.API.Domain.Persistence.Contexts
             builder.Entity<Plan>().Property(p => p.Name).IsRequired().HasMaxLength(50);
             builder.Entity<Plan>().Property(p => p.Description).IsRequired().HasMaxLength(200);
 
-            builder.Entity<Plan>()
-                .HasMany(p => p.Users)
-                .WithOne(p => p.Plan)
-                .HasForeignKey(p => p.PlanId);    
+            //builder.Entity<Plan>()
+            //    .HasMany(p => p.Users)
+            //    .WithOne(p => p.Plan)
+            //    .HasForeignKey(p => p.PlanId);    
             
             // Posts Entity
 

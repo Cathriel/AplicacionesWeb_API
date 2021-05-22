@@ -21,7 +21,7 @@ namespace Roomies.API.Services
         }
 
 
-        public async Task<PlanResponse> DeleteAsync(string id)
+        public async Task<PlanResponse> DeleteAsync(int id)
         {
             var existingPlan= await _planRepository.FindById(id);
 
@@ -41,7 +41,7 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<PlanResponse> GetByIdAsync(string id)
+        public async Task<PlanResponse> GetByIdAsync(int id)
         {
             var existingPlan = await _planRepository.FindById(id);
 
@@ -71,7 +71,7 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<PlanResponse> UpdateAsync(string id, Plan plan)
+        public async Task<PlanResponse> UpdateAsync(int id, Plan plan)
         {
             var existingPlan = await _planRepository.FindById(id);
 
@@ -79,6 +79,8 @@ namespace Roomies.API.Services
                 return new PlanResponse("Plan inexistente");
 
             existingPlan.Name = plan.Name;
+            existingPlan.Description = plan.Description;
+            existingPlan.Price = plan.Price;
 
             try
             {

@@ -10,9 +10,9 @@ namespace Roomies.API.Domain.Services
     public interface IMessageService
     {
         Task<IEnumerable<Message>> ListAsync();
-        Task<IEnumerable<Message>> ListByConversationIdAsync(string conversationId);
-        Task<MessageResponse> GetByIdAsync(string id);
-        Task<MessageResponse> SaveAsync(Message message);
-        Task<MessageResponse> DeleteAsync(string id);
+        Task<IEnumerable<Message>> ListByConversationIdAsync(int conversationId);
+        Task<MessageResponse> GetByIdAsync(int id);
+        Task<MessageResponse> SaveAsync(Message message,int conversationId,int userId);
+        Task<MessageResponse> DeleteAsync(int id);
     }
 }

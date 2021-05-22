@@ -7,7 +7,7 @@ namespace Roomies.API.Resources
 {
     public class UserResource
     {
-		public string IdUser { get; set; }
+		public int IdUser { get; set; }
 		public string Email { get; set; }
 		public string Password { get; set; }
 		public string Name { get; set; }
