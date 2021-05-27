@@ -1,8 +1,10 @@
 ﻿using Roomies.API.Domain.Models;
+using Roomies.API.Domain.Persistence.Repositories;
 using Roomies.API.Domain.Repositories;
 using Roomies.API.Domain.Services;
 using Roomies.API.Domain.Services.Communications;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,13 +17,15 @@ namespace Roomies.API.Services
         private readonly IPlanRepository _planRepository;
         private readonly IFavouritePostRepository _favouritePostRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserRepository _userRepository;
 
-        public LeaseholderService(ILeaseholderRepository leaseholderRepository, IFavouritePostRepository favouritePostRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository = null)
+        public LeaseholderService(ILeaseholderRepository leaseholderRepository, IFavouritePostRepository favouritePostRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository = null, IUserRepository userRepository = null)
         {
             _leaseholderRepository = leaseholderRepository;
             _favouritePostRepository = favouritePostRepository;
             _unitOfWork = unitOfWork;
             _planRepository = planRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<LeaseholderResponse> DeleteAsync(int id)
@@ -33,6 +37,14 @@ namespace Roomies.API.Services
 
             try
             {
+                if (existingLeaseholder.FavouritePosts != null)
+                {
+                    existingLeaseholder.FavouritePosts.ForEach(favouritePost=>
+                {
+                    _favouritePostRepository.Remove(favouritePost);
+                });
+                }
+
                 _leaseholderRepository.Remove(existingLeaseholder);
                 await _unitOfWork.CompleteAsync();
 
@@ -74,15 +86,39 @@ namespace Roomies.API.Services
                 return new LeaseholderResponse("Plan inexistente");
 
 
+            DateTime fechaActual = DateTime.Today;
+            if (fechaActual.Year - leaseholder.Birthday.Year < 18)
+            {
+                return new LeaseholderResponse("El Leaseholder debe ser mayor de 18 años");
+            }
+                
+
             try
             {
+
+                IEnumerable<User> users = await _userRepository.ListAsync();
+
+                bool different = true;
+
+               if (users != null)
+                    users.ToList().ForEach(user =>
+                    {
+                        if (leaseholder.Email == user.Email)
+                            different = false;
+                    });
+
+                if(different==false)
+                    return new LeaseholderResponse("El email ingresado ya existe");
+
                 leaseholder.PlanId = planId;
 
-                await _leaseholderRepository.AddAsync(leaseholder);
-                await _unitOfWork.CompleteAsync();
+                    await _leaseholderRepository.AddAsync(leaseholder);
+                    await _unitOfWork.CompleteAsync();
 
-                return new LeaseholderResponse(leaseholder);
+                    return new LeaseholderResponse(leaseholder);
+                
             }
+
             catch (Exception ex)
             {
                 return new LeaseholderResponse($"Un error ocurrió al guardar el arrendatario: {ex.Message}");

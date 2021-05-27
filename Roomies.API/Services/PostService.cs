@@ -15,15 +15,17 @@ namespace Roomies.API.Services
         private readonly ILandlordRepository _landlordRepository;
         private readonly ILeaseholderRepository _leaseholderRepository;
         private readonly IFavouritePostRepository _favouritePostRepository;
+        private readonly IReviewRepository _reviewRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PostService(IPostRepository postRepository, IUnitOfWork unitOfWork, IFavouritePostRepository favouritePostRepository, ILandlordRepository landlordRepository = null, ILeaseholderRepository leaseholderRepository = null)
+        public PostService(IPostRepository postRepository, IUnitOfWork unitOfWork, IFavouritePostRepository favouritePostRepository, ILandlordRepository landlordRepository = null, ILeaseholderRepository leaseholderRepository = null, IReviewRepository reviewRepository = null)
         {
             _postRepository = postRepository;
             _favouritePostRepository = favouritePostRepository;
             _unitOfWork = unitOfWork;
             _landlordRepository = landlordRepository;
             _leaseholderRepository = leaseholderRepository;
+            _reviewRepository = reviewRepository;
         }
 
 
@@ -36,6 +38,13 @@ namespace Roomies.API.Services
 
             try
             {
+                if (existingPost.Reviews!=null) { 
+                 existingPost.Reviews.ForEach(delegate (Review review)
+                  {
+                      _reviewRepository.Remove(review);
+                 });
+                }
+
                 _postRepository.Remove(existingPost);
                 await _unitOfWork.CompleteAsync();
 

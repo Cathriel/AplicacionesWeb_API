@@ -66,6 +66,11 @@ namespace Roomies.API.Services
             return await _reviewRepository.ListByLeaseholderId(leaseholderId);
         }
 
+        public async Task<IEnumerable<Review>> ListByPostIdAsync(int postId)
+        {
+            return await _reviewRepository.ListByPostId(postId);
+        }
+
         public async Task<ReviewResponse> SaveAsync(Review review,int leaseholderId,int postId)
         {
 

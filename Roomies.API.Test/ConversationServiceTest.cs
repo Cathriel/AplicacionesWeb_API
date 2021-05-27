@@ -1,71 +1,72 @@
-using NUnit.Framework;
-using Moq;
-using FluentAssertions;
-using Roomies.API.Domain.Repositories;
-using Roomies.API.Services;
-using Roomies.API.Domain.Services.Communications;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Roomies.API.Domain.Models;
+//using NUnit.Framework;
+//using Moq;
+//using FluentAssertions;
+//using Roomies.API.Domain.Repositories;
+//using Roomies.API.Services;
+//using Roomies.API.Domain.Services.Communications;
+//using System.Threading.Tasks;
+//using System.Collections.Generic;
+//using Roomies.API.Domain.Models;
 
-namespace Roomies.API.Test
-{
-    public class ConversationServiceTest
-    {
-        [SetUp]
-        public void Setup()
-        {
-        }
 
-        [Test]
-        public async Task GetAllAsyncWhenNoConversationReturnsEmptyCollection()
-        {
-            // Arrange
+//namespace Roomies.API.Test
+//{
+//    public class ConversationServiceTest
+//    {
+//        [SetUp]
+//        public void Setup()
+//        {
+//        }
 
-            var mockConversationRepository = GetDefaultIConversationRepositoryInstance();
-            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
+//        [Test]
+//        public async Task GetAllAsyncWhenNoConversationReturnsEmptyCollection()
+//        {
+//            // Arrange
 
-            mockConversationRepository.Setup(r => r.ListAsync()).ReturnsAsync(new List<Conversation>());
+//            var mockConversationRepository = GetDefaultIConversationRepositoryInstance();
+//            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
 
-            var service = new ConversationService(mockUnitOfWork.Object, mockConversationRepository.Object);
+//            mockConversationRepository.Setup(r => r.ListAsync()).ReturnsAsync(new List<Conversation>());
 
-            // Act
+//            var service = new ConversationService(mockUnitOfWork.Object, mockConversationRepository.Object);
 
-            List<Conversation> result = (List<Conversation>)await service.ListAsync();
-            var conversationCount = result.Count;
+//            // Act
 
-            // Assert
+//            List<Conversation> result = (List<Conversation>)await service.ListAsync();
+//            var conversationCount = result.Count;
 
-            conversationCount.Should().Equals(0);
-        }
+//            // Assert
 
-        [Test]
-        public async Task GetByIdAsyncWhenInvalidIdReturnsCategoryNotFoundResponse()
-        {
-            // Arrange
-            var mockConversationRepository = GetDefaultIConversationRepositoryInstance();
-            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
-            var conversationId = "1";
-            Conversation conversation = new Conversation();
-            mockConversationRepository.Setup(r => r.FindById(conversationId)).Returns(Task.FromResult<Conversation>(null));
-            var service = new ConversationService(mockUnitOfWork.Object, mockConversationRepository.Object);
+//            conversationCount.Should().Equals(0);
+//        }
 
-            // Act
-            ConversationResponse result = await service.GetByIdAsync(conversationId);
-            var message = result.Message;
+//        [Test]
+//        public async Task GetByIdAsyncWhenInvalidIdReturnsCategoryNotFoundResponse()
+//        {
+//            // Arrange
+//            var mockConversationRepository = GetDefaultIConversationRepositoryInstance();
+//            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
+//            var conversationId = "1";
+//            Conversation conversation = new Conversation();
+//            mockConversationRepository.Setup(r => r.FindById(conversationId)).Returns(Task.FromResult<Conversation>(null));
+//            var service = new ConversationService(mockUnitOfWork.Object, mockConversationRepository.Object);
 
-            // Assert
-            message.Should().Be("Conversación inexistente");
-        }
+//            // Act
+//            ConversationResponse result = await service.GetByIdAsync(conversationId);
+//            var message = result.Message;
 
-        private Mock<IConversationRepository> GetDefaultIConversationRepositoryInstance()
-        {
-            return new Mock<IConversationRepository>();
-        }
+//            // Assert
+//            message.Should().Be("Conversación inexistente");
+//        }
 
-        private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
-        {
-            return new Mock<IUnitOfWork>();
-        }
-    }
-}
+//        private Mock<IConversationRepository> GetDefaultIConversationRepositoryInstance()
+//        {
+//            return new Mock<IConversationRepository>();
+//        }
+
+//        private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
+//        {
+//            return new Mock<IUnitOfWork>();
+//        }
+//    }
+//}

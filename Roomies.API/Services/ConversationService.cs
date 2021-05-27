@@ -15,6 +15,7 @@ namespace Roomies.API.Services
         private readonly IConversationRepository _conversationRepository;
         private readonly IUserRepository _userRepository;
         public readonly IUnitOfWork _unitOfWork;
+        private readonly IMessageRepository _messageRepository;
 
         public ConversationService(IUnitOfWork unitOfWork, IConversationRepository conversationRepository, IUserRepository userRepository = null)
         {
@@ -33,6 +34,14 @@ namespace Roomies.API.Services
 
             try
             {
+                if (existingConversation.Messages != null)
+                {
+                    existingConversation.Messages.ForEach(delegate (Message message)
+                    {
+                        _messageRepository.Remove(message);
+                    });
+                }
+
                 _conversationRepository.Remove(existingConversation);
                 await _unitOfWork.CompleteAsync();
 

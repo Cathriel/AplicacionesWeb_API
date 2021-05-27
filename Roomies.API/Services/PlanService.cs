@@ -1,4 +1,5 @@
 ﻿using Roomies.API.Domain.Models;
+using Roomies.API.Domain.Persistence.Repositories;
 using Roomies.API.Domain.Repositories;
 using Roomies.API.Domain.Services;
 using Roomies.API.Domain.Services.Communications;
@@ -13,11 +14,13 @@ namespace Roomies.API.Services
     {
         private readonly IPlanRepository _planRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserRepository _userRepository;
 
-        public PlanService(IPlanRepository planRepository, IUnitOfWork unitOfWork)
+        public PlanService(IPlanRepository planRepository, IUnitOfWork unitOfWork, IUserRepository userRepository)
         {
             _planRepository = planRepository;
             _unitOfWork = unitOfWork;
+            _userRepository = userRepository;
         }
 
 
@@ -30,6 +33,14 @@ namespace Roomies.API.Services
 
             try
             {
+                if (existingPlan.Users != null)
+                {
+                    existingPlan.Users.ForEach(delegate (User user)
+                {
+                    _userRepository.Remove(user);
+                });
+                }
+
                 _planRepository.Remove(existingPlan);
                 await _unitOfWork.CompleteAsync();
 

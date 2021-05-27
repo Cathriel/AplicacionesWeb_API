@@ -9,6 +9,7 @@ namespace Roomies.API.Domain.Persistence.Repositories
     public interface IUserRepository
     {
         Task<IEnumerable<User>> ListAsync();
+        Task<IEnumerable<User>> ListByPlanId(int planId);
         Task<User> FindById(int id);
         Task AddAsync(User user);
         void Update(User user);

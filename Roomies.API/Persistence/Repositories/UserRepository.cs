@@ -30,6 +30,14 @@ namespace Roomies.API.Persistence.Repositories
             return await _context.Users.ToListAsync();
         }
 
+        public async Task<IEnumerable<User>> ListByPlanId(int planId)
+        {
+            return await _context.Users
+                .Where(p => p.PlanId == planId)
+                .Include(p => p.Plan)
+                .ToListAsync();
+        }
+
         public void Remove(User user)
         {
             _context.Users.Remove(user);

@@ -1,71 +1,71 @@
-﻿using NUnit.Framework;
-using Moq;
-using FluentAssertions;
-using Roomies.API.Domain.Repositories;
-using Roomies.API.Services;
-using Roomies.API.Domain.Services.Communications;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using Roomies.API.Domain.Models;
+﻿//using NUnit.Framework;
+//using Moq;
+//using FluentAssertions;
+//using Roomies.API.Domain.Repositories;
+//using Roomies.API.Services;
+//using Roomies.API.Domain.Services.Communications;
+//using System.Threading.Tasks;
+//using System.Collections.Generic;
+//using Roomies.API.Domain.Models;
 
-namespace Roomies.API.Test
-{
-    public class PlanServiceTest
-    {
-        [SetUp]
-        public void Setup()
-        {
-        }
+//namespace Roomies.API.Test
+//{
+//    public class PlanServiceTest
+//    {
+//        [SetUp]
+//        public void Setup()
+//        {
+//        }
 
-        [Test]
-        public async Task GetAllAsyncWhenNoPlanReturnsEmptyCollection()
-        {
-            // Arrange
+//        [Test]
+//        public async Task GetAllAsyncWhenNoPlanReturnsEmptyCollection()
+//        {
+//            // Arrange
 
-            var mockPlanRepository = GetDefaultIPlanRepositoryInstance();
-            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
+//            var mockPlanRepository = GetDefaultIPlanRepositoryInstance();
+//            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
 
-            mockPlanRepository.Setup(r => r.ListAsync()).ReturnsAsync(new List<Plan>());
+//            mockPlanRepository.Setup(r => r.ListAsync()).ReturnsAsync(new List<Plan>());
 
-            var service = new PlanService(mockPlanRepository.Object, mockUnitOfWork.Object);
+//            var service = new PlanService(mockPlanRepository.Object, mockUnitOfWork.Object);
 
-            // Act
+//            // Act
 
-            List<Plan> result = (List<Plan>)await service.ListAsync();
-            var planCount = result.Count;
+//            List<Plan> result = (List<Plan>)await service.ListAsync();
+//            var planCount = result.Count;
 
-            // Assert
+//            // Assert
 
-            planCount.Should().Equals(0);
-        }
+//            planCount.Should().Equals(0);
+//        }
 
-        [Test]
-        public async Task GetByIdAsyncWhenInvalidIdReturnsCategoryNotFoundResponse()
-        {
-            // Arrange
-            var mockPlanRepository = GetDefaultIPlanRepositoryInstance();
-            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
-            var planId = "1";
-            Plan plan = new Plan();
-            mockPlanRepository.Setup(r => r.FindById(planId)).Returns(Task.FromResult<Plan>(null));
-            var service = new PlanService(mockPlanRepository.Object, mockUnitOfWork.Object);
+//        [Test]
+//        public async Task GetByIdAsyncWhenInvalidIdReturnsCategoryNotFoundResponse()
+//        {
+//            // Arrange
+//            var mockPlanRepository = GetDefaultIPlanRepositoryInstance();
+//            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
+//            var planId = "1";
+//            Plan plan = new Plan();
+//            mockPlanRepository.Setup(r => r.FindById(planId)).Returns(Task.FromResult<Plan>(null));
+//            var service = new PlanService(mockPlanRepository.Object, mockUnitOfWork.Object);
 
-            // Act
-            PlanResponse result = await service.GetByIdAsync(planId);
-            var message = result.Message;
+//            // Act
+//            PlanResponse result = await service.GetByIdAsync(planId);
+//            var message = result.Message;
 
-            // Assert
-            message.Should().Be("Plan inexistente");
-        }
+//            // Assert
+//            message.Should().Be("Plan inexistente");
+//        }
 
-        private Mock<IPlanRepository> GetDefaultIPlanRepositoryInstance()
-        {
-            return new Mock<IPlanRepository>();
-        }
+//        private Mock<IPlanRepository> GetDefaultIPlanRepositoryInstance()
+//        {
+//            return new Mock<IPlanRepository>();
+//        }
 
-        private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
-        {
-            return new Mock<IUnitOfWork>();
-        }
-    }
-}
+//        private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()
+//        {
+//            return new Mock<IUnitOfWork>();
+//        }
+//    }
+//}

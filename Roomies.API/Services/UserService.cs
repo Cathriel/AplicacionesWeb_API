@@ -58,6 +58,11 @@ namespace Roomies.API.Services
             return await _userRepository.ListAsync();
         }
 
+        public async Task<IEnumerable<User>> ListByPlanIdAsync(int planId)
+        {
+            return await _userRepository.ListByPlanId(planId);
+        }
+
         public async Task<UserResponse> SaveAsync(User user,int planId)
         {
 
