@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Roomies.API.Domain.Models;
 using Roomies.API.Domain.Persistence.Repositories;
+using System;
 
 namespace Roomies.API.Test
 {
@@ -144,51 +145,6 @@ namespace Roomies.API.Test
             result.Resource.Should().Be(leaseholder2);
         }
 
-
-
-        //[Test]
-        //public async Task GetAllAsyncWhenNoLeaseholderReturnsEmptyCollection()
-        //{
-        //    // Arrange
-
-        //    var mockLeaseholderRepository = GetDefaultILeaseholderRepositoryInstance();
-        //    var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
-        //    var mockFavouritePostRepository = GetDefaultFavouritePostRepositoryInstance();
-
-        //    mockLeaseholderRepository.Setup(r => r.ListAsync()).ReturnsAsync(new List<Leaseholder>());
-
-        //    var service = new LeaseholderService(mockLeaseholderRepository.Object, mockFavouritePostRepository.Object,mockUnitOfWork.Object);
-
-        //    // Act
-
-        //    List<Leaseholder> result = (List<Leaseholder>)await service.ListAsync();
-        //    var leaseholderCount = result.Count;
-
-        //    // Assert
-
-        //    leaseholderCount.Should().Equals(0);
-        //}
-
-        //[Test]
-        //public async Task GetByIdAsyncWhenInvalidIdReturnsLeaseholderNotFoundResponse()
-        //{
-        //    // Arrange
-        //    var mockLeaseholderRepository = GetDefaultILeaseholderRepositoryInstance();
-        //    var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
-        //    var mockFavouritePostRepository = GetDefaultFavouritePostRepositoryInstance();
-
-        //    var leaseholderId = "1";
-        //    Leaseholder leaseholder = new Leaseholder();
-        //    mockLeaseholderRepository.Setup(r => r.FindById(leaseholderId)).Returns(Task.FromResult<Leaseholder>(null));
-        //    var service = new LeaseholderService(mockLeaseholderRepository.Object, mockFavouritePostRepository.Object, mockUnitOfWork.Object);
-
-        //    // Act
-        //    LeaseholderResponse result = await service.GetByIdAsync(leaseholderId);
-        //    var message = result.Message;
-
-        //    // Assert
-        //    message.Should().Be("Arrendatario inexistente");
-        //}
 
         private Mock<ILeaseholderRepository> GetDefaultILeaseholderRepositoryInstance()
         {
