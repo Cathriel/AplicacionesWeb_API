@@ -146,6 +146,162 @@ namespace Roomies.API.Test
         }
 
 
+        [Test]
+        public async Task SaveLeaseholderWhenUserIsYoungerThanRequiredReturnsCantSave()
+        {
+            // Arrange
+
+            var mockLeaseholderRepository = GetDefaultILeaseholderRepositoryInstance();
+            var mockUserRepository = GetDefaultIUserRepositoryInstance();
+            var mockFavouritePostRepository = GetDefaultFavouritePostRepositoryInstance();
+            var mockPlanRepository = GetDefaultIPlanRepositoryInstance();
+
+            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
+
+            DateTime birthday = new DateTime(2005, 06, 10);
+
+
+            Plan plan = new Plan
+            {
+                Id = 1
+
+            };
+
+            Leaseholder leaseholder1 = new Leaseholder
+            {
+                IdUser = 1,
+                Birthday = birthday
+
+            };
+
+
+            List<User> users = new List<User>();
+            //:(
+            users.Add(leaseholder1);
+
+            mockPlanRepository.Setup(u => u.AddAsync(plan)).Returns(Task.FromResult<Plan>(plan));
+            mockPlanRepository.Setup(u => u.FindById(1)).Returns(Task.FromResult<Plan>(plan));
+
+            mockUserRepository.Setup(u => u.ListAsync()).Returns(Task.FromResult<IEnumerable<User>>(users as IEnumerable<User>));
+
+            mockLeaseholderRepository.Setup(u => u.FindById(1)).Returns(Task.FromResult<Leaseholder>(leaseholder1));
+
+            var service = new LeaseholderService(mockLeaseholderRepository.Object, mockFavouritePostRepository.Object, mockUnitOfWork.Object, mockPlanRepository.Object, mockUserRepository.Object);
+
+
+            // Act
+
+
+            LeaseholderResponse result = await service.SaveAsync(leaseholder1, 1);
+            var message = result.Message;
+
+
+            // Assert
+
+            message.Should().Be("El Leaseholder debe ser mayor de 18 años");
+        }
+
+        [Test]
+        public async Task SaveLeaseholderWhenUserIsOlderThanEighteenReturnsSave()
+        {
+            // Arrange
+
+            var mockLeaseholderRepository = GetDefaultILeaseholderRepositoryInstance();
+            var mockUserRepository = GetDefaultIUserRepositoryInstance();
+            var mockFavouritePostRepository = GetDefaultFavouritePostRepositoryInstance();
+            var mockPlanRepository = GetDefaultIPlanRepositoryInstance();
+
+            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
+
+            DateTime birthday = new DateTime(1990, 06, 10);
+
+
+            Plan plan = new Plan
+            {
+                Id = 1
+
+            };
+
+            Leaseholder leaseholder1 = new Leaseholder
+            {
+                IdUser = 1,
+                Birthday = birthday
+
+            };
+
+
+            List<User> users = new List<User>();
+            //:(
+            // users.Add(leaseholder1);
+
+            mockPlanRepository.Setup(u => u.AddAsync(plan)).Returns(Task.FromResult<Plan>(plan));
+            mockPlanRepository.Setup(u => u.FindById(1)).Returns(Task.FromResult<Plan>(plan));
+
+            // mockUserRepository.Setup(u => u.ListAsync()).Returns(Task.FromResult<IEnumerable<User>>(users as IEnumerable<User>));
+
+
+            mockLeaseholderRepository.Setup(u => u.AddAsync(leaseholder1)).Returns(Task.FromResult<Leaseholder>(null));
+            mockLeaseholderRepository.Setup(u => u.FindById(1)).Returns(Task.FromResult<Leaseholder>(leaseholder1));
+
+            var service = new LeaseholderService(mockLeaseholderRepository.Object, mockFavouritePostRepository.Object, mockUnitOfWork.Object, mockPlanRepository.Object, mockUserRepository.Object);
+
+
+            // Act
+
+
+            LeaseholderResponse result = await service.SaveAsync(leaseholder1, 1);
+
+
+            // Assert
+
+            result.Resource.Should().Be(leaseholder1);
+        }
+
+
+        [Test]
+        public async Task GetAllAsyncWhenNoLeaseholderReturnsEmptyCollection()
+        {
+            // Arrange
+
+            var mockLeaseholderRepository = GetDefaultILeaseholderRepositoryInstance();
+            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockFavouritePostRepository = GetDefaultFavouritePostRepositoryInstance();
+
+            mockLeaseholderRepository.Setup(r => r.ListAsync()).ReturnsAsync(new List<Leaseholder>());
+
+            var service = new LeaseholderService(mockLeaseholderRepository.Object, mockFavouritePostRepository.Object, mockUnitOfWork.Object);
+
+            // Act
+
+            List<Leaseholder> result = (List<Leaseholder>)await service.ListAsync();
+            var leaseholderCount = result.Count;
+
+            // Assert
+
+            leaseholderCount.Should().Equals(0);
+        }
+
+        [Test]
+        public async Task GetByIdAsyncWhenInvalidIdReturnsLeaseholderNotFoundResponse()
+        {
+            // Arrange
+            var mockLeaseholderRepository = GetDefaultILeaseholderRepositoryInstance();
+            var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
+            var mockFavouritePostRepository = GetDefaultFavouritePostRepositoryInstance();
+
+            var leaseholderId = 1;
+            Leaseholder leaseholder = new Leaseholder();
+            mockLeaseholderRepository.Setup(r => r.FindById(leaseholderId)).Returns(Task.FromResult<Leaseholder>(null));
+            var service = new LeaseholderService(mockLeaseholderRepository.Object, mockFavouritePostRepository.Object, mockUnitOfWork.Object);
+
+            // Act
+            LeaseholderResponse result = await service.GetByIdAsync(leaseholderId);
+            var message = result.Message;
+
+            // Assert
+            message.Should().Be("Arrendatario inexistente");
+        }
+
         private Mock<ILeaseholderRepository> GetDefaultILeaseholderRepositoryInstance()
         {
             return new Mock<ILeaseholderRepository>();
