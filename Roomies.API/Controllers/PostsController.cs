@@ -54,8 +54,7 @@ namespace Roomies.API.Controllers
             var postResource = _mapper.Map<Post, PostResource>(result.Resource);
             return Ok(postResource);
         }
-        //---------------------------
-
+        
         [HttpPost("landlords/{landlordId}/posts")]
 
         public async Task<IActionResult> PostAsync([FromBody] SavePostResource resource, int landlordId)
@@ -73,7 +72,7 @@ namespace Roomies.API.Controllers
 
             return Ok(postResource);
         }
-        //-------------
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SavePostResource resource)
         {

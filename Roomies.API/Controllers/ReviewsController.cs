@@ -41,6 +41,7 @@ namespace Roomies.API.Controllers
 
             return resources;
         }
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ReviewResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
@@ -71,7 +72,7 @@ namespace Roomies.API.Controllers
 
             return Ok(reviewResource);
         }
-        //-------------
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SaveReviewResource resource)
         {

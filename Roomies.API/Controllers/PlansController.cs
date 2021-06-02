@@ -40,6 +40,7 @@ namespace Roomies.API.Controllers
 
             return resources;
         }
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PlanResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]
@@ -53,7 +54,7 @@ namespace Roomies.API.Controllers
             var planResource = _mapper.Map<Plan, PlanResource>(result.Resource);
             return Ok(planResource);
         }
-        //---------------------------
+        
 
     }
 }

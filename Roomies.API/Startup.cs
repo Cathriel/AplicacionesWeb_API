@@ -99,6 +99,7 @@ namespace Roomies.API
 
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

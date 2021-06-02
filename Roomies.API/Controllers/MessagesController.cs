@@ -53,7 +53,7 @@ namespace Roomies.API.Controllers
             var messageResource = _mapper.Map<Message, MessageResource>(result.Resource);
             return Ok(messageResource);
         }
-        //---------------------------
+       
 
         [HttpPost("users/{userId}/conversations/{conversationId}/messages")]
         public async Task<IActionResult> PostAsync([FromBody] SaveMessageResource resource,int conversationId,int userId)
@@ -71,7 +71,7 @@ namespace Roomies.API.Controllers
 
             return Ok(messageResource);
         }
-        //-------------
+        
        
 
         [HttpDelete("{id}")]
