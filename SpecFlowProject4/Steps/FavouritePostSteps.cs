@@ -22,7 +22,7 @@ namespace SpecFlowProject4.Steps
 
 
         [Given(@"Leaseholder wants to add FavouritePost")]
-        public void GivenLandlordWantsToAddFavouritePost(int favouritePostId)
+        public void GivenLeaseholderWantsToAddFavouritePost(int favouritePostId)
         {
             restClient = new RestClient("https://localhost:44356/");
             restRequest = new RestRequest("api/posts", Method.POST);
@@ -30,7 +30,7 @@ namespace SpecFlowProject4.Steps
         }
 
         [When(@"leaseholder adds FavouritePost")]
-        public void WhenPostRequiredAttributesProvided(Table dto)
+        public void WhenLeaseholderAddsFavouritePost(Table dto)
         {
 
             favouritePost = dto.CreateInstance<FavouritePost>();
@@ -43,10 +43,8 @@ namespace SpecFlowProject4.Steps
 
         }
 
-
-
         [Then(@"favouritePost is added successfully")]
-        public void ThenFavouritePostDetailsShouldBe()
+        public void ThenFavouritePostIsAddedSuccessfully()
         {
             Assert.That(2, Is.EqualTo(favouritePost.PostId));
         }

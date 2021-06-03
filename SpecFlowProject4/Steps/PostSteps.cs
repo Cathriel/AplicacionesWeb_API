@@ -31,8 +31,8 @@ namespace SpecFlowProject4.Steps
         }
 
         [When(@"landlord adds post")]
-            public void WhenPostRequiredAttributesProvided(Table dto)
-            {
+         public void WhenLandlordAddsPost(Table dto)
+         {
            
             post = dto.CreateInstance<Post>();
             post = new Post()
@@ -42,15 +42,13 @@ namespace SpecFlowProject4.Steps
             restRequest.AddJsonBody(post);
             response = restClient.Execute(restRequest);
             
-            }
+         }
 
-
-
-            [Then(@"post is added successfully")]
-            public void ThenPostDetailsShouldBe()
-            {
+         [Then(@"post is added successfully")]
+         public void ThenPostIsAddedSuccessfully()
+         {
             Assert.That("Titulo", Is.EqualTo(post.Title));
-            }
+         }
         
     }
 }
