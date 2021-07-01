@@ -14,9 +14,9 @@ namespace Roomies.API.Services
     {
         private readonly IPlanRepository _planRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserRepository _userRepository;
+        private readonly IProfileRepository _userRepository;
 
-        public PlanService(IPlanRepository planRepository, IUnitOfWork unitOfWork, IUserRepository userRepository)
+        public PlanService(IPlanRepository planRepository, IUnitOfWork unitOfWork, IProfileRepository userRepository)
         {
             _planRepository = planRepository;
             _unitOfWork = unitOfWork;
@@ -33,9 +33,9 @@ namespace Roomies.API.Services
 
             try
             {
-                if (existingPlan.Users != null)
+                if (existingPlan.Profiles != null)
                 {
-                    existingPlan.Users.ForEach(delegate (User user)
+                    existingPlan.Profiles.ForEach(delegate (Profile user)
                 {
                     _userRepository.Remove(user);
                 });

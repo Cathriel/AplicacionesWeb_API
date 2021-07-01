@@ -9,25 +9,25 @@ using System.Threading.Tasks;
 
 namespace Roomies.API.Services
 {
-    public class UserPaymentMethodService : IUserPaymentMethodService
+    public class UserPaymentMethodService : IProfilePaymentMethodService
     {
-        private readonly IUserPaymentMethodRepository _userPaymentMethodRepository;
+        private readonly IProfilePaymentMethodRepository _profilePaymentMethodRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public UserPaymentMethodService(IUserPaymentMethodRepository userPaymentMethodRepository, IUnitOfWork unitOfWork)
+        public UserPaymentMethodService(IProfilePaymentMethodRepository userPaymentMethodRepository, IUnitOfWork unitOfWork)
         {
-            _userPaymentMethodRepository = userPaymentMethodRepository;
+            _profilePaymentMethodRepository = userPaymentMethodRepository;
             _unitOfWork = unitOfWork;
         }
 
 
-        public async Task<UserPaymentMethodResponse> AssignUserPaymentMethodAsync(int userId, int paymentMethodId)
+        public async Task<UserPaymentMethodResponse> AssignProfilePaymentMethodAsync(int userId, int paymentMethodId)
         {
             try
             {
-                await _userPaymentMethodRepository.AssignUserPaymentMethodAsync(userId, paymentMethodId);
+                await _profilePaymentMethodRepository.AssignProfilePaymentMethodAsync(userId, paymentMethodId);
                 await _unitOfWork.CompleteAsync();
-                UserPaymentMethod userPaymentMethod = await _userPaymentMethodRepository.FindByUserIdAndPaymentMethodId(userId, paymentMethodId);
+                ProfilePaymentMethod userPaymentMethod = await _profilePaymentMethodRepository.FindByUserIdAndPaymentMethodId(userId, paymentMethodId);
                 return new UserPaymentMethodResponse(userPaymentMethod);
 
             }
@@ -38,28 +38,28 @@ namespace Roomies.API.Services
         }
 
 
-        public async Task<IEnumerable<UserPaymentMethod>> ListAsync()
+        public async Task<IEnumerable<ProfilePaymentMethod>> ListAsync()
         {
-            return await _userPaymentMethodRepository.ListAsync();
+            return await _profilePaymentMethodRepository.ListAsync();
         }
 
-        public async Task<IEnumerable<UserPaymentMethod>> ListByPaymentMethodIdAsync(int paymentMethodId)
+        public async Task<IEnumerable<ProfilePaymentMethod>> ListByPaymentMethodIdAsync(int paymentMethodId)
         {
-            return await _userPaymentMethodRepository.ListByPaymentMethodIdAsync(paymentMethodId);
+            return await _profilePaymentMethodRepository.ListByPaymentMethodIdAsync(paymentMethodId);
         }
 
-        public async Task<IEnumerable<UserPaymentMethod>> ListByUserIdAsync(int userId)
+        public async Task<IEnumerable<ProfilePaymentMethod>> ListByProfileIdAsync(int userId)
         {
-            return await _userPaymentMethodRepository.ListByUserIdAsync(userId);
+            return await _profilePaymentMethodRepository.ListByProfileIdAsync(userId);
         }
 
-        public async Task<UserPaymentMethodResponse> UnassignUserPaymentMethodAsync(int userId, int paymentMethodId)
+        public async Task<UserPaymentMethodResponse> UnassignProfilePaymentMethodAsync(int userId, int paymentMethodId)
         {
             try
             {
-                UserPaymentMethod userPaymentMethod = await _userPaymentMethodRepository.FindByUserIdAndPaymentMethodId(userId, paymentMethodId);
+                ProfilePaymentMethod userPaymentMethod = await _profilePaymentMethodRepository.FindByUserIdAndPaymentMethodId(userId, paymentMethodId);
 
-                _userPaymentMethodRepository.Remove(userPaymentMethod);
+                _profilePaymentMethodRepository.Remove(userPaymentMethod);
                 await _unitOfWork.CompleteAsync();
 
                 return new UserPaymentMethodResponse(userPaymentMethod);

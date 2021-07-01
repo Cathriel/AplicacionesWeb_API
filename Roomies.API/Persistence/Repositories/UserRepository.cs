@@ -25,17 +25,17 @@ namespace Roomies.API.Persistence.Repositories
             return await _context.Users.FindAsync(id);
         }
 
+        public async Task<User> FindByUsername(string username)
+        {
+            IEnumerable<User> users = await ListAsync();
+            var user = users.ToList().SingleOrDefault(x => x.Username == username);
+            return user;
+
+        }
+
         public async Task<IEnumerable<User>> ListAsync()
         {
             return await _context.Users.ToListAsync();
-        }
-
-        public async Task<IEnumerable<User>> ListByPlanId(int planId)
-        {
-            return await _context.Users
-                .Where(p => p.PlanId == planId)
-                .Include(p => p.Plan)
-                .ToListAsync();
         }
 
         public void Remove(User user)

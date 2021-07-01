@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Roomies.API.Domain.Services.Communications
 {
-    public class UserPaymentMethodResponse : BaseResponse<UserPaymentMethod>
+    public class UserPaymentMethodResponse : BaseResponse<ProfilePaymentMethod>
     {
-        public UserPaymentMethodResponse(UserPaymentMethod resource) : base(resource)
+        public UserPaymentMethodResponse(ProfilePaymentMethod resource) : base(resource)
         {
         }
 

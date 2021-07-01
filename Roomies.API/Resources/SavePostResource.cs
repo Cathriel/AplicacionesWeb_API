@@ -12,6 +12,10 @@ namespace Roomies.API.Resources
         [MaxLength(100)]
         public string Title { set; get; }
         [Required]
+        [MaxLength(500)]
+        public string Description { set; get; }
+
+        [Required]
         [MaxLength(50)]
         public string Address { set; get; }
         [Required]

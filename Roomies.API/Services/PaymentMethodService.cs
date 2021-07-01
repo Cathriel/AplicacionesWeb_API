@@ -12,10 +12,10 @@ namespace Roomies.API.Services
     public class PaymentMethodService : IPaymentMethodService
     {
         private readonly IPaymentMethodRepository _paymentMethodRepository;
-        private readonly IUserPaymentMethodRepository _userPaymentMethodRepository;
+        private readonly IProfilePaymentMethodRepository _userPaymentMethodRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PaymentMethodService(IPaymentMethodRepository paymentMethodRepository, IUserPaymentMethodRepository userPaymentMethodRepository, IUnitOfWork unitOfWork)
+        public PaymentMethodService(IPaymentMethodRepository paymentMethodRepository, IProfilePaymentMethodRepository userPaymentMethodRepository, IUnitOfWork unitOfWork)
         {
             _paymentMethodRepository = paymentMethodRepository;
             _userPaymentMethodRepository = userPaymentMethodRepository;
@@ -58,9 +58,9 @@ namespace Roomies.API.Services
             return await _paymentMethodRepository.ListAsync();
         }
 
-        public async Task<IEnumerable<PaymentMethod>> ListByUserIdAsync(int userId)
+        public async Task<IEnumerable<PaymentMethod>> ListByProfileIdAsync(int userId)
         {
-            var userPaymentMethods = await _userPaymentMethodRepository.ListByUserIdAsync(userId);
+            var userPaymentMethods = await _userPaymentMethodRepository.ListByProfileIdAsync(userId);
             var paymentMethod= userPaymentMethods.Select(pt => pt.PaymentMethod).ToList();
             return paymentMethod;
         }

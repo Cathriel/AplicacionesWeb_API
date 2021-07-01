@@ -122,6 +122,7 @@ namespace Roomies.API.Services
             existingPost.District = post.District;
             existingPost.Department = post.Department;
             existingPost.RoomQuantity = post.RoomQuantity;
+            existingPost.Description = post.Description;
 
             try
             {

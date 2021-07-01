@@ -19,12 +19,15 @@ namespace Roomies.API.Controllers
     public class PostsController:ControllerBase
     {
         private readonly IPostService _postService;
+        private IReviewService _reviewService;
+
         private readonly IMapper _mapper;
 
-        public PostsController(IPostService postService, IMapper mapper)
+        public PostsController(IPostService postService, IMapper mapper, IReviewService reviewService)
         {
             _postService = postService;
             _mapper = mapper;
+            _reviewService = reviewService;
         }
 
         [SwaggerOperation(
@@ -41,6 +44,15 @@ namespace Roomies.API.Controllers
 
             return resources;
         }
+        /*[HttpGet("{id}/reviews")]
+        public async Task<IEnumerable<ReviewResource>> GetAllByPostIdAsync(int postId)
+        {
+            var reviews = await _reviewService.ListByPostIdAsync(postId);
+            var resources = _mapper.Map<IEnumerable<Review>, IEnumerable<ReviewResource>>(reviews);
+
+            return resources;
+        }*/
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PostResource), 200)]
         [ProducesResponseType(typeof(BadRequestResult), 404)]

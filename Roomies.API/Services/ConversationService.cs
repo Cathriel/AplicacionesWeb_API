@@ -13,11 +13,11 @@ namespace Roomies.API.Services
     public class ConversationService : IConversationService
     {
         private readonly IConversationRepository _conversationRepository;
-        private readonly IUserRepository _userRepository;
+        private readonly IProfileRepository _userRepository;
         public readonly IUnitOfWork _unitOfWork;
         private readonly IMessageRepository _messageRepository;
 
-        public ConversationService(IUnitOfWork unitOfWork, IConversationRepository conversationRepository, IUserRepository userRepository = null, IMessageRepository messageRepository = null)
+        public ConversationService(IUnitOfWork unitOfWork, IConversationRepository conversationRepository, IProfileRepository userRepository = null, IMessageRepository messageRepository = null)
         {
             _conversationRepository = conversationRepository;
             _unitOfWork = unitOfWork;

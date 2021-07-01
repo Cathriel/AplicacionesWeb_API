@@ -56,13 +56,13 @@ namespace Roomies.API.Controllers
         //---------------------------
 
         [HttpPost("plans/{planId}/leaseholders")]
-        public async Task<IActionResult> PostAsync([FromBody] SaveLeaseholderResource resource,int planId)
+        public async Task<IActionResult> PostAsync([FromBody] SaveLeaseholderResource resource,int planId,string username)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var leaseholder = _mapper.Map<SaveLeaseholderResource, Leaseholder>(resource);
-            var result = await _leaseholderService.SaveAsync(leaseholder,planId);
+            var result = await _leaseholderService.SaveAsync(leaseholder,planId,username);
 
             if (!result.Success)
                 return BadRequest(result.Message);

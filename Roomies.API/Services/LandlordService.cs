@@ -13,17 +13,19 @@ namespace Roomies.API.Services
     public class LandlordService : ILandlordService
     {
         private readonly ILandlordRepository _landlordRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IPlanRepository _planRepository;
         private readonly IPostRepository _postRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserRepository _userRepository;
+        private readonly IProfileRepository _profileRepository;
 
-        public LandlordService(ILandlordRepository landlordRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository = null, IPostRepository postRepository = null, IUserRepository userRepository = null)
+        public LandlordService(ILandlordRepository landlordRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository, IPostRepository postRepository, IProfileRepository profileRepository, IUserRepository userRepository)
         {
             _landlordRepository = landlordRepository;
             _unitOfWork = unitOfWork;
             _planRepository = planRepository;
             _postRepository = postRepository;
+            _profileRepository = profileRepository;
             _userRepository = userRepository;
         }
 
@@ -71,12 +73,18 @@ namespace Roomies.API.Services
             return await _landlordRepository.ListAsync();
         }
 
-        public async Task<LandlordResponse> SaveAsync(Landlord landlord,int planId)
+        public async Task<LandlordResponse> SaveAsync(Landlord landlord,int planId, string username)
         {
             var existingPlan = await _planRepository.FindById(planId);
+            var ExistingUsername = await _userRepository.FindByUsername(username); 
+
 
             if (existingPlan == null)
                 return new LandlordResponse("Plan inexistente");
+
+            if (ExistingUsername == null)
+                return new LandlordResponse("Username no encontrado o invalido");
+
 
             DateTime fechaActual = DateTime.Today;
             if (fechaActual.Year - landlord.Birthday.Year < 18)
@@ -86,21 +94,13 @@ namespace Roomies.API.Services
 
             try
             {
-                IEnumerable<User> users = await _userRepository.ListAsync();
-
-                bool different = true;
-
-                if (users != null)
-                    users.ToList().ForEach(user =>
-                    {
-                        if (landlord.Email == user.Email)
-                            different = false;
-                    });
-
-                if (different == false)
-                    return new LandlordResponse("El email ingresado ya existe");
+                //IEnumerable<Profile> users = await _profileRepository.ListAsync();
 
                 landlord.PlanId = planId;
+                landlord.Plan = existingPlan;
+
+                landlord.UserId = ExistingUsername.Id;
+                landlord.User = ExistingUsername;
 
                 await _landlordRepository.AddAsync(landlord);
                 await _unitOfWork.CompleteAsync();
@@ -123,14 +123,12 @@ namespace Roomies.API.Services
             existingLandlord.Name = landlord.Name;
             existingLandlord.Address = landlord.Address;
             existingLandlord.Birthday = landlord.Birthday;
-            existingLandlord.Email = landlord.Email;
             existingLandlord.Department = landlord.Department;
             existingLandlord.CellPhone = landlord.CellPhone;
             existingLandlord.District = landlord.District;
             existingLandlord.LastName = landlord.LastName;
             existingLandlord.Province = landlord.Province;
             existingLandlord.IdCard = landlord.IdCard;
-            existingLandlord.Password = landlord.Password;
 
             try
             {

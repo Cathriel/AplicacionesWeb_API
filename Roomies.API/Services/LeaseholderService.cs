@@ -14,6 +14,7 @@ namespace Roomies.API.Services
     public class LeaseholderService : ILeaseholderService
     {
         private readonly ILeaseholderRepository _leaseholderRepository;
+
         private readonly IPlanRepository _planRepository;
         private readonly IFavouritePostRepository _favouritePostRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -78,12 +79,15 @@ namespace Roomies.API.Services
             return leaseholders;
         }
 
-        public async Task<LeaseholderResponse> SaveAsync(Leaseholder leaseholder,int planId)
+        public async Task<LeaseholderResponse> SaveAsync(Leaseholder leaseholder,int planId, string username)
         {
             var existingPlan = await _planRepository.FindById(planId);
+            var ExistingUsername = await _userRepository.FindByUsername(username);
 
             if (existingPlan == null)
                 return new LeaseholderResponse("Plan inexistente");
+            if (ExistingUsername == null)
+                return new LeaseholderResponse("Username no encontrado o invalido");
 
 
             DateTime fechaActual = DateTime.Today;
@@ -96,26 +100,18 @@ namespace Roomies.API.Services
             try
             {
 
-                IEnumerable<User> users = await _userRepository.ListAsync();
+                //IEnumerable<Profile> users = await _userRepository.ListAsync();
 
-                bool different = true;
-
-               if (users != null)
-                    users.ToList().ForEach(user =>
-                    {
-                        if (leaseholder.Email == user.Email)
-                            different = false;
-                    });
-
-                if(different==false)
-                    return new LeaseholderResponse("El email ingresado ya existe");
-
+                leaseholder.Plan = existingPlan;
                 leaseholder.PlanId = planId;
 
-                    await _leaseholderRepository.AddAsync(leaseholder);
-                    await _unitOfWork.CompleteAsync();
+                leaseholder.UserId = ExistingUsername.Id;
+                leaseholder.User = ExistingUsername;
 
-                    return new LeaseholderResponse(leaseholder);
+                await _leaseholderRepository.AddAsync(leaseholder);
+                await _unitOfWork.CompleteAsync();
+
+                return new LeaseholderResponse(leaseholder);
                 
             }
 
@@ -135,7 +131,6 @@ namespace Roomies.API.Services
             existingLeaseholder.Name = leaseholder.Name;
             existingLeaseholder.Address = leaseholder.Address;
             existingLeaseholder.Birthday = leaseholder.Birthday;
-            existingLeaseholder.Email = leaseholder.Email;
             existingLeaseholder.Department = leaseholder.Department;
             existingLeaseholder.CellPhone = leaseholder.CellPhone;
             existingLeaseholder.District = leaseholder.District;
@@ -143,7 +138,6 @@ namespace Roomies.API.Services
             existingLeaseholder.Province = leaseholder.Province;
             existingLeaseholder.IdCard = leaseholder.IdCard;
             existingLeaseholder.Description = leaseholder.Description;
-            existingLeaseholder.Password = leaseholder.Password;
 
             try
             {

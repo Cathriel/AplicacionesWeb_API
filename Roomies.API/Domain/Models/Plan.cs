@@ -12,6 +12,6 @@ namespace Roomies.API.Domain.Models
         public string Name { set; get; }
         public string Description { set; get; }
         
-        public List<User> Users { set; get; }
+        public List<Profile> Profiles { set; get; }
     }
 }

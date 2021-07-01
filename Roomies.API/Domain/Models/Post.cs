@@ -9,6 +9,7 @@ namespace Roomies.API.Domain.Models
     {
         public int Id { set; get; }
         public string Title { set; get; }
+        public string Description {set;get;}
         public string Address { set; get; }
         public string Province { set; get; }
         public string District { set; get; }

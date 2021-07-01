@@ -25,11 +25,11 @@ namespace Roomies.API.Test
 
             var mockPlanRepository = GetDefaultIPlanRepositoryInstance();
             var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
-            var mockUserRepository = GetDefaultIUserRepositoryInstance();
+            var mockProfileRepository = GetDefaultIProfileRepositoryInstance();
 
             mockPlanRepository.Setup(r => r.ListAsync()).ReturnsAsync(new List<Plan>());
 
-            var service = new PlanService(mockPlanRepository.Object, mockUnitOfWork.Object, mockUserRepository.Object);
+            var service = new PlanService(mockPlanRepository.Object, mockUnitOfWork.Object, mockProfileRepository.Object);
 
             // Act
 
@@ -47,7 +47,7 @@ namespace Roomies.API.Test
             // Arrange
             var mockPlanRepository = GetDefaultIPlanRepositoryInstance();
             var mockUnitOfWork = GetDefaultIUnitOfWorkInstance();
-            var mockUserRepository = GetDefaultIUserRepositoryInstance();
+            var mockUserRepository = GetDefaultIProfileRepositoryInstance();
             var planId = 1;
             Plan plan = new Plan();
             mockPlanRepository.Setup(r => r.FindById(planId)).Returns(Task.FromResult<Plan>(null));
@@ -65,9 +65,9 @@ namespace Roomies.API.Test
         {
             return new Mock<IPlanRepository>();
         }
-        private Mock<IUserRepository> GetDefaultIUserRepositoryInstance()
+        private Mock<IProfileRepository> GetDefaultIProfileRepositoryInstance()
         {
-            return new Mock<IUserRepository>();
+            return new Mock<IProfileRepository>();
         }
 
         private Mock<IUnitOfWork> GetDefaultIUnitOfWorkInstance()

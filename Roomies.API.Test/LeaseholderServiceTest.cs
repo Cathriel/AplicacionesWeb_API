@@ -42,26 +42,26 @@ namespace Roomies.API.Test
 
             Leaseholder leaseholder1 = new Leaseholder
             {
-                IdUser = 1,
-                Email=email
+                UserId = 1,
+                IdCard = "12345678"
 
             };
 
             Leaseholder leaseholder2 = new Leaseholder
             {
-                IdUser = 2,
-                Email = email
+                UserId = 2,
+                IdCard = "87654321"
 
             };
 
-            List<User> users = new List<User>();
+            List<Profile> profiles = new List<Profile>();
             //:(
-            users.Add(leaseholder1);
+            profiles.Add(leaseholder1);
            
             mockPlanRepository.Setup(u => u.AddAsync(plan)).Returns(Task.FromResult<Plan>(plan));
             mockPlanRepository.Setup(u => u.FindById(1)).Returns(Task.FromResult<Plan>(plan));
             
-            mockUserRepository.Setup(u => u.ListAsync()).Returns(Task.FromResult<IEnumerable<User>>(users as IEnumerable<User>));
+            mockUserRepository.Setup(u => u.ListAsync()).Returns(Task.FromResult<IEnumerable<User>>(profiles as IEnumerable<User>));
 
             mockLeaseholderRepository.Setup(u => u.FindById(1)).Returns(Task.FromResult<Leaseholder>(leaseholder1));
             mockLeaseholderRepository.Setup(u => u.AddAsync(leaseholder2)).Returns(Task.FromResult<Leaseholder>(null));
@@ -73,7 +73,7 @@ namespace Roomies.API.Test
             // Act
 
 
-            LeaseholderResponse result = await service.SaveAsync(leaseholder2,1);
+            LeaseholderResponse result = await service.SaveAsync(leaseholder2,1,"audiomiguel");
             var message = result.Message;
 
 
@@ -105,26 +105,26 @@ namespace Roomies.API.Test
 
             Leaseholder leaseholder1 = new Leaseholder
             {
-                IdUser = 1,
-                Email = email
+                UserId = 1,
+                IdCard = "12345678"
 
             };
 
             Leaseholder leaseholder2 = new Leaseholder
             {
-                IdUser = 2,
-                Email = "email2"
+                UserId = 2,
+                IdCard = "87654321"
 
             };
 
-            List<User> users = new List<User>();
+            List<Profile> profiles = new List<Profile>();
             //:(
-            users.Add(leaseholder1);
+            profiles.Add(leaseholder1);
 
             mockPlanRepository.Setup(u => u.AddAsync(plan)).Returns(Task.FromResult<Plan>(plan));
             mockPlanRepository.Setup(u => u.FindById(1)).Returns(Task.FromResult<Plan>(plan));
 
-            mockUserRepository.Setup(u => u.ListAsync()).Returns(Task.FromResult<IEnumerable<User>>(users as IEnumerable<User>));
+            mockUserRepository.Setup(u => u.ListAsync()).Returns(Task.FromResult<IEnumerable<User>>(profiles as IEnumerable<User>));
 
             mockLeaseholderRepository.Setup(u => u.FindById(1)).Returns(Task.FromResult<Leaseholder>(leaseholder1));
             mockLeaseholderRepository.Setup(u => u.AddAsync(leaseholder2)).Returns(Task.FromResult<Leaseholder>(null));
@@ -136,7 +136,7 @@ namespace Roomies.API.Test
             // Act
 
 
-            LeaseholderResponse result = await service.SaveAsync(leaseholder2, 1);
+            LeaseholderResponse result = await service.SaveAsync(leaseholder2, 1, "audiomiguel");
             
 
 
@@ -169,20 +169,20 @@ namespace Roomies.API.Test
 
             Leaseholder leaseholder1 = new Leaseholder
             {
-                IdUser = 1,
+                UserId = 1,
                 Birthday = birthday
 
             };
 
 
-            List<User> users = new List<User>();
+            List<Profile> profiles = new List<Profile>();
             //:(
-            users.Add(leaseholder1);
+            profiles.Add(leaseholder1);
 
             mockPlanRepository.Setup(u => u.AddAsync(plan)).Returns(Task.FromResult<Plan>(plan));
             mockPlanRepository.Setup(u => u.FindById(1)).Returns(Task.FromResult<Plan>(plan));
 
-            mockUserRepository.Setup(u => u.ListAsync()).Returns(Task.FromResult<IEnumerable<User>>(users as IEnumerable<User>));
+            mockUserRepository.Setup(u => u.ListAsync()).Returns(Task.FromResult<IEnumerable<User>>(profiles as IEnumerable<User>));
 
             mockLeaseholderRepository.Setup(u => u.FindById(1)).Returns(Task.FromResult<Leaseholder>(leaseholder1));
 
@@ -192,7 +192,7 @@ namespace Roomies.API.Test
             // Act
 
 
-            LeaseholderResponse result = await service.SaveAsync(leaseholder1, 1);
+            LeaseholderResponse result = await service.SaveAsync(leaseholder1, 1, "audiomiguel");
             var message = result.Message;
 
 
@@ -224,20 +224,20 @@ namespace Roomies.API.Test
 
             Leaseholder leaseholder1 = new Leaseholder
             {
-                IdUser = 1,
+                UserId = 1,
                 Birthday = birthday
 
             };
 
 
-            List<User> users = new List<User>();
+            List<Profile> profiles = new List<Profile>();
             //:(
-            // users.Add(leaseholder1);
+            // profiles.Add(leaseholder1);
 
             mockPlanRepository.Setup(u => u.AddAsync(plan)).Returns(Task.FromResult<Plan>(plan));
             mockPlanRepository.Setup(u => u.FindById(1)).Returns(Task.FromResult<Plan>(plan));
 
-            // mockUserRepository.Setup(u => u.ListAsync()).Returns(Task.FromResult<IEnumerable<User>>(users as IEnumerable<User>));
+            // mockUserRepository.Setup(u => u.ListAsync()).Returns(Task.FromResult<IEnumerable<User>>(profiles as IEnumerable<User>));
 
 
             mockLeaseholderRepository.Setup(u => u.AddAsync(leaseholder1)).Returns(Task.FromResult<Leaseholder>(null));
@@ -249,7 +249,7 @@ namespace Roomies.API.Test
             // Act
 
 
-            LeaseholderResponse result = await service.SaveAsync(leaseholder1, 1);
+            LeaseholderResponse result = await service.SaveAsync(leaseholder1, 1, "audiomiguel");
 
 
             // Assert

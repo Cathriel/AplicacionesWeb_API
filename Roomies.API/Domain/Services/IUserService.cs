@@ -9,11 +9,12 @@ namespace Roomies.API.Domain.Services
 {
     public interface IUserService
     {
-        Task<IEnumerable<User>> ListAsync();
-        Task<UserResponse> GetByIdAsync(int id);
-        Task<IEnumerable<User>> ListByPlanIdAsync(int planId);
-        Task<UserResponse> SaveAsync(User user,int planId);
-        Task<UserResponse> UpdateAsync(int id, User user);
-        Task<UserResponse> DeleteAsync(int id);
+        Task<AuthenticationResponse> Authenticate(AuthenticationRequest request);
+        Task<IEnumerable<User>> GetAll();
+       
+        // IEnumerable<User> GetAll();
+        Task<UserResponse> Register(RegisterRequest request);
+
+        Task<UserResponse> SaveAsync(User user);
     }
 }

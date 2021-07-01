@@ -108,7 +108,6 @@ namespace Roomies.API.Services
                 return new ReviewResponse("Review inexistente");
 
             existingReview.Content = review.Content;
-            existingReview.StarQuantity = review.StarQuantity;
 
             try
             {

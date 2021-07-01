@@ -22,12 +22,18 @@ namespace Roomies.API.Persistence.Repositories
 
         public async Task<Landlord> FindById(int id)
         {
-            return await _context.Landlords.FindAsync(id);
+            //return await _context.Landlords.FindAsync(id);
+            return await _context.Landlords.Include(l=>l.Plan).FirstAsync(l=>l.Id==id);
+           // return await _context.Landlords.FirstAsync(l => l.Id == id);
+
+
         }
 
         public async Task<IEnumerable<Landlord>> ListAsync()
         {
-            return await _context.Landlords.ToListAsync();
+            //            return await _context.Products.Include(p => p.Category).ToListAsync();
+
+            return await _context.Landlords.Include(l=>l.Plan).ToListAsync();
         }
 
         public void Remove(Landlord landlord)

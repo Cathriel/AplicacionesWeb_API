@@ -16,8 +16,9 @@ namespace Roomies.API.Domain.Persistence.Contexts
         public DbSet<Plan> Plans { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<ProfilePaymentMethod> UserPaymentMethods { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserPaymentMethod> UserPaymentMethods { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -59,44 +60,59 @@ namespace Roomies.API.Domain.Persistence.Contexts
                 .HasForeignKey(pt => pt.LeaseholderId);
 
 
-            //User Entity
-            builder.Entity<User>().ToTable("Users");
+            //Profile Entity
+            builder.Entity<Profile>().ToTable("Profiles");
                            
-            builder.Entity<User>().HasKey(p => p.IdUser);
-            builder.Entity<User>().Property(p => p.IdUser).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<User>().Property(p => p.Email).IsRequired().HasMaxLength(50);
-            builder.Entity<User>().Property(p => p.Password).IsRequired().HasMaxLength(24);
-            builder.Entity<User>().Property(p => p.Name).IsRequired().HasMaxLength(50);
-            builder.Entity<User>().Property(p => p.LastName).IsRequired().HasMaxLength(50);
-            builder.Entity<User>().Property(p => p.CellPhone).IsRequired().HasMaxLength(9);
-            builder.Entity<User>().Property(p => p.IdCard).IsRequired().HasMaxLength(8);
-            builder.Entity<User>().Property(p => p.Description).IsRequired().HasMaxLength(240);
-            builder.Entity<User>().Property(p => p.Birthday).IsRequired();
-            builder.Entity<User>().Property(p => p.Department).IsRequired().HasMaxLength(25);
-            builder.Entity<User>().Property(p => p.Province).IsRequired().HasMaxLength(25);
-            builder.Entity<User>().Property(p => p.District).IsRequired().HasMaxLength(25);
-            builder.Entity<User>().Property(p => p.Address).IsRequired().HasMaxLength(100);
-            builder.Entity<User>().Property(p => p.StartSubscription).IsRequired();
-            builder.Entity<User>().Property(p => p.EndSubsciption).IsRequired();
+            builder.Entity<Profile>().HasKey(p => p.Id);
+            builder.Entity<Profile>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Profile>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+            builder.Entity<Profile>().Property(p => p.LastName).IsRequired().HasMaxLength(50);
+            builder.Entity<Profile>().Property(p => p.CellPhone).IsRequired().HasMaxLength(9);
+            builder.Entity<Profile>().Property(p => p.IdCard).IsRequired().HasMaxLength(8);
+            builder.Entity<Profile>().Property(p => p.Description).IsRequired().HasMaxLength(240);
+            builder.Entity<Profile>().Property(p => p.Birthday).IsRequired();
+            builder.Entity<Profile>().Property(p => p.Department).IsRequired().HasMaxLength(25);
+            builder.Entity<Profile>().Property(p => p.Province).IsRequired().HasMaxLength(25);
+            builder.Entity<Profile>().Property(p => p.District).IsRequired().HasMaxLength(25);
+            builder.Entity<Profile>().Property(p => p.Address).IsRequired().HasMaxLength(100);
+            builder.Entity<Profile>().Property(p => p.StartSubscription).IsRequired();
+            builder.Entity<Profile>().Property(p => p.EndSubsciption).IsRequired();
 
             // Relationships 
-            builder.Entity<User>()
+            builder.Entity<Profile>()
                 .HasMany(p => p.Conversation1)
                 .WithOne(p => p.User1)
                 .HasForeignKey(p => p.User1Id);
 
-            builder.Entity<User>()
+            builder.Entity<Profile>()
                .HasMany(p => p.Conversation2)
                .WithOne(p => p.User2)
                .HasForeignKey(p => p.User2Id);
 
 
+            //User Entity
+            builder.Entity<User>().ToTable("Users");
+                           
+            builder.Entity<User>().HasKey(p => p.Id);
+            builder.Entity<User>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<User>().Property(p => p.FirstName).IsRequired();
+            builder.Entity<User>().Property(p => p.LastName).IsRequired();
+            builder.Entity<User>().Property(p => p.Username).IsRequired();
+            builder.Entity<User>().Property(p => p.PasswordHash).IsRequired();
+
+            // Relationships 
+            builder.Entity<Profile>()
+                .HasOne(owp => owp.User)
+                .WithOne(u => u.Profile)
+                .HasForeignKey<Profile>(owp => owp.UserId);
+
+
             //Landlord Entity
             builder.Entity<Landlord>().ToTable("Landlords");
-                         
-           
+
+
             // Relationships 
-           
+
 
             builder.Entity<Landlord>()
                 .HasMany(p => p.Posts)
@@ -155,6 +171,8 @@ namespace Roomies.API.Domain.Persistence.Contexts
             builder.Entity<Post>().HasKey(p => p.Id);
             builder.Entity<Post>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Post>().Property(p => p.Title).IsRequired().HasMaxLength(100);
+            builder.Entity<Post>().Property(p => p.Description).IsRequired().HasMaxLength(500);
+
             builder.Entity<Post>().Property(p => p.Address).IsRequired().HasMaxLength(50);
             builder.Entity<Post>().Property(p => p.Province).IsRequired().HasMaxLength(25);
             builder.Entity<Post>().Property(p => p.District).IsRequired().HasMaxLength(25);
@@ -177,19 +195,18 @@ namespace Roomies.API.Domain.Persistence.Contexts
             builder.Entity<Review>().Property(e => e.Id).IsRequired().ValueGeneratedOnAdd();
             builder.Entity<Review>().Property(e => e.Content).IsRequired().HasMaxLength(300);
             builder.Entity<Review>().Property(e => e.Date).IsRequired();
-            builder.Entity<Review>().Property(e => e.StarQuantity).IsRequired();
 
             //UserPaymentMethod Entity Intermediate Table
-            builder.Entity<UserPaymentMethod>().ToTable("UserPaymentMethods");
+            builder.Entity<ProfilePaymentMethod>().ToTable("ProfilePaymentMethods");
 
-            builder.Entity<UserPaymentMethod>().HasKey(p => new { p.UserId, p.PaymentMethodId });
+            builder.Entity<ProfilePaymentMethod>().HasKey(p => new { p.ProfileId, p.PaymentMethodId });
 
-            builder.Entity<UserPaymentMethod>()
-                 .HasOne(pt => pt.User)
-                 .WithMany(p => p.UserPaymentMethods)
-                 .HasForeignKey(pt => pt.UserId);
+            builder.Entity<ProfilePaymentMethod>()
+                 .HasOne(pt => pt.Profile)
+                 .WithMany(p => p.ProfilePaymentMethods)
+                 .HasForeignKey(pt => pt.ProfileId);
 
-            builder.Entity<UserPaymentMethod>()
+            builder.Entity<ProfilePaymentMethod>()
                 .HasOne(pt => pt.PaymentMethod)
                 .WithMany(t => t.UserPaymentMethods)
                 .HasForeignKey(pt => pt.PaymentMethodId);

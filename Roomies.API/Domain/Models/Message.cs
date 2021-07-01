@@ -12,7 +12,7 @@ namespace Roomies.API.Domain.Models
         public DateTime SentDate { set; get; }
         public bool Seen { set; get; }
 
-        public User User { get; set; }
+        public Profile User { get; set; }
         public int UserId { get; set; }
         public int ConversationId { set; get; }
         public Conversation Conversation { set; get; }

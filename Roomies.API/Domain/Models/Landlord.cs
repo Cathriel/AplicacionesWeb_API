@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Roomies.API.Domain.Models
 {
-    public class Landlord : User
+    public class Landlord : Profile
     {
         public List<Post> Posts { get; set; }
         

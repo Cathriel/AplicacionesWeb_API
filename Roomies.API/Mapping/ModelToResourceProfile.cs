@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Roomies.API.Domain.Models;
+using Roomies.API.Domain.Services.Communications;
 using Roomies.API.Resources;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Roomies.API.Mapping
 {
-    public class ModelToResourceProfile : Profile
+    public class ModelToResourceProfile : AutoMapper.Profile
     {
         public ModelToResourceProfile()
         {
@@ -18,11 +19,12 @@ namespace Roomies.API.Mapping
             CreateMap<Plan, PlanResource>();
             CreateMap<Review, ReviewResource>();
             CreateMap<Post, PostResource>();
-            CreateMap<User, UserResource>();
+            CreateMap<Domain.Models.Profile, ProfileResource>();
             CreateMap<Landlord, LandlordResource>();
             CreateMap<Leaseholder, LeaseholderResource>();
+            CreateMap<User, AuthenticationResponse>();
 
-       
+
 
         }
     }

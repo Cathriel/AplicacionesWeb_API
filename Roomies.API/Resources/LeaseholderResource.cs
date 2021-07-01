@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Roomies.API.Resources
 {
-    public class LeaseholderResource:UserResource
+    public class LeaseholderResource:ProfileResource
     {
     }
 }

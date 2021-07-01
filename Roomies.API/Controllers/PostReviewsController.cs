@@ -29,5 +29,6 @@ namespace Roomies.API.Controllers
 
             return resources;
         }
+        //se va a POST
     }
 }

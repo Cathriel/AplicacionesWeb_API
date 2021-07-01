@@ -10,6 +10,6 @@ namespace Roomies.API.Domain.Models
         public int Id { get; set; }
         public string CVV { get; set; }
         public DateTime ExpiryDate { get; set; }
-        public List<UserPaymentMethod> UserPaymentMethods { get; set; }
+        public List<ProfilePaymentMethod> UserPaymentMethods { get; set; }
     }
 }

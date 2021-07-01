@@ -11,7 +11,6 @@ namespace Roomies.API.Resources
         [Required]
         [MaxLength(300)]
         public string Content { set; get; }
-        [Required]
-        public int StarQuantity { set; get; }
+
     }
 }

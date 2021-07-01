@@ -1,25 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lhm20\\Desktop\\git\\AplicacionesWeb_API\\Roomies.API\\Roomies.API.csproj": {}
+    "D:\\APLICACIONES_WEB_API\\Roomies.API\\Roomies.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lhm20\\Desktop\\git\\AplicacionesWeb_API\\Roomies.API\\Roomies.API.csproj": {
+    "D:\\APLICACIONES_WEB_API\\Roomies.API\\Roomies.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lhm20\\Desktop\\git\\AplicacionesWeb_API\\Roomies.API\\Roomies.API.csproj",
+        "projectUniqueName": "D:\\APLICACIONES_WEB_API\\Roomies.API\\Roomies.API.csproj",
         "projectName": "Roomies.API",
-        "projectPath": "C:\\Users\\lhm20\\Desktop\\git\\AplicacionesWeb_API\\Roomies.API\\Roomies.API.csproj",
-        "packagesPath": "C:\\Users\\lhm20\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lhm20\\Desktop\\git\\AplicacionesWeb_API\\Roomies.API\\obj\\",
+        "projectPath": "D:\\APLICACIONES_WEB_API\\Roomies.API\\Roomies.API.csproj",
+        "packagesPath": "C:\\Users\\yomig\\.nuget\\packages\\",
+        "outputPath": "D:\\APLICACIONES_WEB_API\\Roomies.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\lhm20\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\yomig\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -53,6 +51,14 @@
               "target": "Package",
               "version": "[8.1.1, )"
             },
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.2, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[5.0.7, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.5, )"
@@ -79,6 +85,10 @@
               "target": "Package",
               "version": "[5.0.1, )"
             },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[6.11.1, )"
+            },
             "MySql.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.3, )"
@@ -90,6 +100,10 @@
             "Swashbuckle.AspNetCore.Annotations": {
               "target": "Package",
               "version": "[6.1.4, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.11.1, )"
             }
           },
           "imports": [
@@ -110,7 +124,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
